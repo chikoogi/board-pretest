@@ -10,14 +10,22 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.11",
+    "@mui/material": "^5.15.11",
+    "@tanstack/react-query": "^5.56.2",
+    "@types/node": "^22.5.5",
+    "axios": "^1.7.7",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "vite-tsconfig-paths": "^5.0.1"
   },
   "devDependencies": {
-    "@emotion/babel-plugin": "^11.12.0",
-    "@types/react": "^18.3.3",
+    "@emotion/babel-plugin": "^11.11.0",
+    "@faker-js/faker": "^9.0.3",
+    "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^8.7.0",
     "@typescript-eslint/parser": "^8.7.0",
@@ -32,7 +40,7 @@
     "prettier": "^3.3.3",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1",
-    "vite-tsconfig-paths": "^5.0.1"
+    "vite": "^5.1.4",
+    "vite-plugin-svgr": "^4.2.0"
   }
 }
