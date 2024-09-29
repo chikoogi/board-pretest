@@ -3,20 +3,25 @@ import { css } from "@emotion/react";
 export default {
   wrapper: css`
     width: 100%;
+    height: 100%;
   `,
   headerWrapper: css`
     background-color: #333;
+    height: 30px;
   `,
   navWrapper: css`
     background-color: #333;
     padding: 10px;
     width: 100%;
-    height: 100px;
+    height: calc(100% - 30px);
   `,
   ulWrapper: css`
     display: flex;
     justify-content: center;
+    align-items: center;
     list-style-type: none;
+    width: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
   `,

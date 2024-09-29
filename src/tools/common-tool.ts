@@ -50,6 +50,54 @@ export function getYYYYMMDDFormat(date: Date, option?: string, isTime?: boolean)
   }
 }
 
+export function getMMDDFormat(date: Date, option?: string, isTime?: boolean) {
+  const year = date.getFullYear().toString();
+  const month = 1 + date.getMonth();
+  const monthStr = `0${month}`.slice(-2);
+  const day = date.getDate();
+  const dayStr = `0${day}`.slice(-2);
+
+  const hour = date.getHours();
+  const hourStr = `0${hour}`.slice(-2);
+
+  const min = date.getMinutes();
+  const minStr = `0${min}`.slice(-2);
+
+  const sec = date.getSeconds();
+  const secStr = `0${sec}`.slice(-2);
+
+  if (isSameDay(date)) {
+    return `${hourStr}:${minStr}`;
+  }
+
+  if (isTime) {
+    if (option === "slash") return `${monthStr}/${dayStr} ${hourStr}:${minStr}`;
+    else if (option === "hyphen") return `${monthStr}-${dayStr} ${hourStr}:${minStr}`;
+    else if (option === "comma") return `${monthStr}.${dayStr} ${hourStr}:${minStr}`;
+    else return `${monthStr}${dayStr}${hourStr}${minStr}`;
+  } else {
+    if (option === "slash") return `${monthStr}/${dayStr}`;
+    else if (option === "hyphen") return `${monthStr}-${dayStr}`;
+    else if (option === "comma") return `${monthStr}.${dayStr}`;
+    else return `${monthStr}${dayStr}`;
+  }
+}
+
+export function isSameDay(inputDateStr) {
+  // 입력받은 날짜 문자열을 Date 객체로 변환
+  const inputDate = new Date(inputDateStr);
+
+  // 현재 날짜 가져오기
+  const today = new Date();
+
+  // 입력된 날짜와 현재 날짜의 연도, 월, 일을 비교
+  return (
+    inputDate.getFullYear() === today.getFullYear() &&
+    inputDate.getMonth() === today.getMonth() &&
+    inputDate.getDate() === today.getDate()
+  );
+}
+
 export function getDateDiff(_date1: Date, _date2: Date) {
   const diffDate_1 = new Date(_date1.getTime());
   const diffDate_2 = new Date(_date2.getTime());

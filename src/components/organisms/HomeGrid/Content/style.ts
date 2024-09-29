@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 
+const BOARD_HEIGHT = 400;
 export default {
   wrapper: css`
     width: 100%;
@@ -7,11 +8,11 @@ export default {
   `,
   carouselWrapper: css`
     width: 100%;
-    height: 500px;
+    height: calc(100% - ${BOARD_HEIGHT}px);
   `,
   boardWrapper: css`
     width: 100%;
-    height: calc(100% - 500px);
+    height: ${BOARD_HEIGHT}px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   `,

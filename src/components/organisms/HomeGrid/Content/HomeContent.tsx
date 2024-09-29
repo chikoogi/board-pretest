@@ -18,10 +18,10 @@ const HomeContent = () => {
       <div css={styled.boardWrapper}>
         {isLoading && <>isLoading...</>}
         <div css={styled.boardItem}>
-          <BoardPreview data={data.freeBoard} boardType={QUESTION_BOARD} />
+          <BoardPreview data={data.questionBoard} boardType={QUESTION_BOARD} />
         </div>
         <div>
-          <BoardPreview data={data.questionBoard} boardType={FREE_BOARD} />
+          <BoardPreview data={data.freeBoard} boardType={FREE_BOARD} />
         </div>
       </div>
     </div>
