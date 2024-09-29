@@ -9,7 +9,7 @@ import ReactRouterPrompt from "react-router-prompt";
 import Confirm from "@components/atoms/Confirm";
 import Modal from "@components/atoms/Modal";
 
-const BoardWriteContent = ({ boardType }: any) => {
+const BoardWriteContent = ({ boardType, enableDirty = true }: any) => {
   const [isDirty, setIsDirty] = useState(false);
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ const BoardWriteContent = ({ boardType }: any) => {
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (isDirty) {
+      if (enableDirty && isDirty) {
         event.preventDefault();
         event.returnValue = "";
       }
@@ -34,7 +34,7 @@ const BoardWriteContent = ({ boardType }: any) => {
 
   return (
     <>
-      <ReactRouterPrompt when={isDirty}>
+      <ReactRouterPrompt when={enableDirty && isDirty}>
         {({ isActive, onConfirm, onCancel }) => {
           return (
             <Modal isOpen={isActive} onClose={onCancel}>

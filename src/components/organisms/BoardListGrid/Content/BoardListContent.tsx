@@ -21,12 +21,16 @@ const BoardListContent = ({ data, boardType, onSearch, onChangePage, filters }: 
       <div>
         <SearchForBoard boardType={boardType} onSearch={onSearch} filters={filters} />
         <TableForBoard rows={rows} totalRows={totalRows} onChangePage={onChangePage} />
-        <Pagination
-          totalItems={totalRows}
-          itemsPerPage={PER_PAGE}
-          onPageChange={onChangePage}
-          currentPage={filters.page}
-        />
+        {rows.length !== 0 && (
+          <div css={styled.paginationContainer}>
+            <Pagination
+              totalItems={totalRows}
+              itemsPerPage={PER_PAGE}
+              onPageChange={onChangePage}
+              currentPage={filters.page}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

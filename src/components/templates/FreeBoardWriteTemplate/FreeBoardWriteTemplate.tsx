@@ -6,7 +6,7 @@ const FreeBoardWriteTemplate = () => {
   return (
     <div css={styled.wrapper}>
       <div css={styled.contentContainer}>
-        <BoardWriteContent boardType={FREE_BOARD} />
+        <BoardWriteContent boardType={FREE_BOARD} enableDirty={true} />
       </div>
     </div>
   );
