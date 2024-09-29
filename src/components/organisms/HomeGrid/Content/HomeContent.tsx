@@ -20,7 +20,7 @@ const HomeContent = () => {
         <div css={styled.boardItem}>
           <BoardPreview data={data.questionBoard} boardType={QUESTION_BOARD} />
         </div>
-        <div>
+        <div css={styled.boardItem}>
           <BoardPreview data={data.freeBoard} boardType={FREE_BOARD} />
         </div>
       </div>

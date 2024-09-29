@@ -13,5 +13,6 @@ export default {
   contentContainer: css`
     width: 100%;
     height: calc(100% - ${GNB_HEIGHT}px);
+    padding: 30px 300px;
   `,
 };

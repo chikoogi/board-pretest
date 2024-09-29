@@ -1,10 +1,8 @@
 import axios from "axios";
 
-console.log(import.meta.env);
 export const REPO_OWNER = "chikoogi";
 export const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 
-console.log(GITHUB_TOKEN);
 export const axiosInstance = axios.create({
   baseURL: `https://api.github.com`,
   headers: { Authorization: `token ${GITHUB_TOKEN}` },

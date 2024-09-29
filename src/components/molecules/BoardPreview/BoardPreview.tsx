@@ -35,24 +35,6 @@ const BoardPreview = ({ data, boardType }: any) => {
             <div>{getMMDDFormat(new Date(r.created_at), "slash", true)}</div>
           </div>
         ))}
-
-        {/*<List>
-          {rows.length === 0 && <div>등록된 게시글이 없습니다.</div>}
-          {rows.map((r) => (
-            <ListItem
-              key={r.id}
-              onClick={() => {
-                const boardId = r.number;
-                navigate(`/${boardType}/detail/${boardId}`);
-              }}
-            >
-              <ListItemButton>
-                <div>{r.title}</div>
-                <div>{r.created_at}</div>
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>*/}
       </div>
     </div>
   );

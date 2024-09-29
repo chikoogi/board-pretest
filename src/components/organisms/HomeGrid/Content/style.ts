@@ -14,7 +14,9 @@ export default {
     width: 100%;
     height: ${BOARD_HEIGHT}px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(auto, 50%));
+    grid-template-rows: 1fr;
+    column-gap: 10px;
   `,
   boardItem: css`
     width: 100%;
