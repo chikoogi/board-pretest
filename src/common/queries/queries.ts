@@ -88,13 +88,24 @@ export const useBoardQuery = () => {
     });
   };
 
-  const useGetIssuesFromQuestionBoard = () => {
+  const useGetIssuesFromQuestionBoard = ({
+    page,
+    filterType,
+    searchStr,
+  }: {
+    page: number;
+    filterType?: string;
+    searchStr?: string;
+  }) => {
     return useQuery({
-      queryKey: ["board", "questionBoard"],
+      queryKey: ["board", "questionBoard", page, filterType, searchStr],
       queryFn: async ({ queryKey }) => {
+        const filter = searchStr ? `${searchStr}+in:${filterType}` : "";
+
         const res = await axiosInstance.get(
-          `/search/issues?q=repo:${REPO_OWNER}/questionboard&per_page=${PER_PAGE}`
+          `/search/issues?q=repo:${REPO_OWNER}/questionboard+is:issue+${filter}&per_page=${PER_PAGE}&page=${page}`
         );
+
         if (isAxiosError(res)) {
           throw res;
         }

@@ -6,8 +6,12 @@ export default {
     height: 100%;
   `,
   headerWrapper: css`
-    background-color: #333;
+    width: 100%;
     height: 30px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #121212;
+    padding: 0 12px;
   `,
   navWrapper: css`
     background-color: #333;

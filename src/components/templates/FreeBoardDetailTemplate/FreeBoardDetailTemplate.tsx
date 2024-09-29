@@ -9,12 +9,14 @@ const FreeBoardDetailTemplate = () => {
 
   const { query } = useBoardQuery();
 
-  const { data } = query.getIssuesDetailFromFreeBoard(id);
+  const { data, isLoading } = query.getIssuesDetailFromFreeBoard(id);
 
-  if (!id) return;
+  if (isLoading) {
+    return <>isLoading...</>;
+  }
   return (
     <div css={styled.wrapper}>
-      <BoardDetailContent data={data} boardId={id} boardType={FREE_BOARD} />
+      <BoardDetailContent data={data} boardType={FREE_BOARD} />
     </div>
   );
 };

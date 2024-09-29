@@ -5,11 +5,23 @@ import { useParams } from "react-router-dom";
 import styled from "@components/templates/FreeBoardDetailTemplate/style.ts";
 import BoardDetailContent from "@components/organisms/BoardDetailGrid/Content";
 import BoardEditContent from "@components/organisms/BoardEditGrid/Content";
+import { useState } from "react";
 
 const QuestionBoardListTemplate = () => {
   const { query } = useBoardQuery();
+  const [filters, setFilters] = useState({ page: 1, filterType: "title", searchStr: "" });
+  const handleSearch = (newFilters: any) => {
+    setFilters((prev) => ({ ...prev, ...newFilters })); // 필터 값 업데이트
+  };
 
-  const { data, isLoading } = query.getIssuesFromQuestionBoard();
+  const handleChangePage = (page: number) => {
+    setFilters((prev) => ({
+      ...prev,
+      page: page,
+    }));
+  };
+
+  const { data, isLoading } = query.getIssuesFromQuestionBoard(filters);
 
   console.log(data);
 
@@ -17,8 +29,14 @@ const QuestionBoardListTemplate = () => {
     return <>isLoading...</>;
   }
   return (
-    <div>
-      <BoardListContent data={data} boardType={QUESTION_BOARD} />
+    <div css={styled.wrapper}>
+      <BoardListContent
+        data={data}
+        boardType={QUESTION_BOARD}
+        onSearch={handleSearch}
+        onChangePage={handleChangePage}
+        currentPage={filters.page}
+      />
     </div>
   );
 };

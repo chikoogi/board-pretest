@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { FREE_BOARD, QUESTION_BOARD } from "@src/variables/common-variable.ts";
 import { useState } from "react";
+import styled from "@components/templates/FreeBoardDetailTemplate/style.ts";
 
 const FreeBoardListTemplate = () => {
   const { query } = useBoardQuery();
@@ -25,7 +26,7 @@ const FreeBoardListTemplate = () => {
     return <>isLoading...</>;
   }
   return (
-    <div>
+    <div css={styled.wrapper}>
       <BoardListContent
         data={data}
         boardType={FREE_BOARD}
