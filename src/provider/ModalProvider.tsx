@@ -26,15 +26,17 @@ export const useModal = () => {
 };
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
+  const [modalStack, setModalStack] = useState<ReactNode[]>([]);
+
   const [modalContent, setModalContent] = useState<ReactNode | null>(null);
   const location = useLocation();
-
+  const modalKey = Date.now();
   const showModal = (Component: ComponentType<any>, props?: any) => {
-    setModalContent(<Component {...props} />);
+    setModalStack((prevStack) => [...prevStack, <Component {...props} key={modalKey} />]);
   };
 
   const closeModal = () => {
-    setModalContent(null);
+    setModalStack((prevStack) => prevStack.slice(0, -1));
   };
 
   useEffect(() => {
@@ -45,9 +47,9 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
   return (
     <ModalContext.Provider value={{ showModal, closeModal }}>
       {children}
-      {modalContent && (
-        <Modal isOpen={Boolean(modalContent)} onClose={closeModal}>
-          {modalContent}
+      {modalStack.length > 0 && (
+        <Modal isOpen={modalStack.length > 0} onClose={closeModal}>
+          {modalStack[modalStack.length - 1]}
         </Modal>
       )}
     </ModalContext.Provider>

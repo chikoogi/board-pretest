@@ -37,10 +37,8 @@ const FocusTrap = ({ isOpen, children }: any) => {
       previousFocusedElement.current = document.activeElement as HTMLElement;
       document.addEventListener("keydown", handleKeyDown);
     }
-    console.log(previousFocusedElement.current);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-      console.log(previousFocusedElement.current);
       if (previousFocusedElement.current) {
         previousFocusedElement.current.focus();
       }

@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { useModal } from "@src/provider/ModalProvider.tsx";
 import Confirm from "@components/atoms/Confirm";
+import Alert from "@components/atoms/Alert";
 
 const BoardDetailContent = ({ data, boardId, boardType }: any) => {
   const navigate = useNavigate();
