@@ -1,17 +1,63 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  axiosInstance,
   axiosInstanceFree,
   axiosInstanceGraphGL,
   axiosInstanceQuestion,
+  REPO_OWNER,
 } from "@src/common/axios/AxiosInstance.ts";
 import { isAxiosError } from "axios";
 
+export const PER_PAGE = 10;
+
 export const useBoardQuery = () => {
-  const useGetIssuesFromFreeBoard = () => {
+  const useGetIssuesFromBoard = () => {
     return useQuery({
-      queryKey: ["board", "freeBoard"],
+      queryKey: ["board"],
       queryFn: async ({ queryKey }) => {
-        const res = await axiosInstanceFree.get("/issues");
+        // const res = await axiosInstanceFree.get(`/issues?per_page=${PER_PAGE}`);
+        const fRes = await axiosInstance.get(
+          `/search/issues?q=repo:${REPO_OWNER}/freeboard+is:issue&per_page=5`
+        );
+        const qRes = await axiosInstance.get(
+          `/search/issues?q=repo:${REPO_OWNER}/questionboard+is:issue&per_page=5`
+        );
+
+        if (isAxiosError(fRes)) {
+          throw fRes;
+        }
+
+        if (isAxiosError(qRes)) {
+          throw qRes;
+        }
+
+        return {
+          freeBoard: fRes.data,
+          questionBoard: qRes.data,
+        };
+      },
+      refetchOnWindowFocus: false,
+      retry: 2,
+    });
+  };
+
+  const useGetIssuesFromFreeBoard = ({
+    page,
+    filterType,
+    searchStr,
+  }: {
+    page: number;
+    filterType?: string;
+    searchStr?: string;
+  }) => {
+    return useQuery({
+      queryKey: ["board", "freeBoard", page, filterType, searchStr],
+      queryFn: async ({ queryKey }) => {
+        const filter = searchStr ? `${searchStr}+in:${filterType}` : "";
+
+        const res = await axiosInstance.get(
+          `/search/issues?q=repo:${REPO_OWNER}/freeboard+is:issue+${filter}&per_page=${PER_PAGE}&page=${page}`
+        );
 
         if (isAxiosError(res)) {
           throw res;
@@ -20,12 +66,13 @@ export const useBoardQuery = () => {
         return res.data;
       },
       refetchOnWindowFocus: false,
+      retry: 2,
     });
   };
 
   const useGetIssuesDetailFromFreeBoard = (id?: string) => {
     return useQuery({
-      queryKey: ["board", "freeBoard", id],
+      queryKey: ["board", "freeBoard", "detail", id],
       queryFn: async ({ queryKey }) => {
         const res = await axiosInstanceFree.get(`/issues/${id}`);
 
@@ -37,6 +84,7 @@ export const useBoardQuery = () => {
       },
       enabled: Boolean(id),
       refetchOnWindowFocus: false,
+      retry: 2,
     });
   };
 
@@ -44,8 +92,9 @@ export const useBoardQuery = () => {
     return useQuery({
       queryKey: ["board", "questionBoard"],
       queryFn: async ({ queryKey }) => {
-        const res = await axiosInstanceQuestion.get("/issues");
-
+        const res = await axiosInstance.get(
+          `/search/issues?q=repo:${REPO_OWNER}/questionboard&per_page=${PER_PAGE}`
+        );
         if (isAxiosError(res)) {
           throw res;
         }
@@ -53,6 +102,7 @@ export const useBoardQuery = () => {
         return res.data;
       },
       refetchOnWindowFocus: false,
+      retry: 2,
     });
   };
 
@@ -70,6 +120,7 @@ export const useBoardQuery = () => {
       },
       enabled: Boolean(id),
       refetchOnWindowFocus: false,
+      retry: 2,
     });
   };
 
@@ -262,6 +313,7 @@ export const useBoardQuery = () => {
 
   return {
     query: {
+      getIssuesFromBoard: useGetIssuesFromBoard,
       getIssuesFromFreeBoard: useGetIssuesFromFreeBoard,
       getIssuesDetailFromFreeBoard: useGetIssuesDetailFromFreeBoard,
       getIssuesFromQuestionBoard: useGetIssuesFromQuestionBoard,

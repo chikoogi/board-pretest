@@ -1,6 +1,7 @@
 import styled from "./style.ts";
 import { TextareaAutosize, TextField } from "@mui/material";
 import Profile from "@components/molecules/Profile";
+import { getYYYYMMDDFormat } from "@src/tools/common-tool.ts";
 
 const ReadBoard = ({ item }: any) => {
   return (
@@ -10,7 +11,9 @@ const ReadBoard = ({ item }: any) => {
         <div css={styled.profileContainer}>
           <Profile src={item.user.avatar_url} name={item.user.login} />
         </div>
-        <div css={styled.createAtContainer}>{item.created_at}</div>
+        <div css={styled.createAtContainer}>
+          {getYYYYMMDDFormat(new Date(item.created_at), "hyphen", true)}
+        </div>
       </div>
       <div css={styled.contentContainer}>{item.body}</div>
     </div>

@@ -6,21 +6,22 @@ import { useNavigate, useParams } from "react-router-dom";
 const SEARCH_TYPE_LIST = [
   {
     label: "제목",
-    value: "1",
+    value: "title",
   },
   {
     label: "내용",
-    value: "2",
+    value: "body",
   },
 ];
 
-const SearchForBoard = ({ boardType }: any) => {
+const SearchForBoard = ({ boardType, onSearch }: any) => {
   const navigate = useNavigate();
-  const [searchType, setSearchType] = useState<string>("1");
-
+  const [searchType, setSearchType] = useState<string>("title");
+  const [searchStr, setSearchStr] = useState<string>("");
   const handleChange = (event: SelectChangeEvent) => {
     setSearchType(event.target.value as string);
   };
+
   return (
     <>
       <div css={styled.wrapper}>
@@ -41,12 +42,16 @@ const SearchForBoard = ({ boardType }: any) => {
             </Select>
           </div>
           <div>
-            <TextField />
+            <TextField
+              placeholder={"검색"}
+              value={searchStr}
+              onChange={(e) => setSearchStr(e.target.value)}
+            />
           </div>
-          <Button>검색</Button>
+          <Button onClick={() => onSearch({ searchType, searchStr })}>검색</Button>
         </div>
         <div css={styled.rightContainer}>
-          <Button onClick={() => navigate(`/write/${boardType}`)}>글쓰기</Button>
+          <Button onClick={() => navigate(`../write`)}>글쓰기</Button>
         </div>
       </div>
     </>
