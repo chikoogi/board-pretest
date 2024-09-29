@@ -4,6 +4,7 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { FREE_BOARD, QUESTION_BOARD } from "@src/variables/common-variable.ts";
+import { useEffect } from "react";
 
 const BoardWriteContent = ({ boardType }: any) => {
   const navigate = useNavigate();
@@ -11,6 +12,19 @@ const BoardWriteContent = ({ boardType }: any) => {
   const { mutate } = useBoardQuery();
   const addFreeMutate = mutate.addIssuesFromFreeBoard();
   const addQuestionMutate = mutate.addIssuesFromQuestionBoard();
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <>

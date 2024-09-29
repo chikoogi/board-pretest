@@ -1,7 +1,8 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import { ComponentType, createContext, ReactNode, useContext, useState } from "react";
+import Modal from "@components/atoms/Modal";
 
 interface ModalContextType {
-  showModal: (Component: ReactNode, props?: any) => void;
+  showModal: (Component: ComponentType<any>, props?: any) => void;
   closeModal: () => void;
 }
 
@@ -18,7 +19,7 @@ export const useModal = () => {
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [modalContent, setModalContent] = useState<ReactNode | null>(null);
 
-  const showModal = (Component: ReactNode, props?: any) => {
+  const showModal = (Component: ComponentType<any>, props?: any) => {
     setModalContent(<Component {...props} />);
   };
 
@@ -30,12 +31,9 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     <ModalContext.Provider value={{ showModal, closeModal }}>
       {children}
       {modalContent && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            {modalContent}
-            <button onClick={closeModal}>Close</button>
-          </div>
-        </div>
+        <Modal isOpen={Boolean(modalContent)} onClose={closeModal}>
+          {modalContent}
+        </Modal>
       )}
     </ModalContext.Provider>
   );

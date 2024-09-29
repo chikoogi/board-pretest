@@ -3,6 +3,7 @@ import InputBoard from "@components/molecules/InputBoard";
 import { useNavigate } from "react-router-dom";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { FREE_BOARD, QUESTION_BOARD } from "@src/variables/common-variable.ts";
+import { useEffect } from "react";
 
 const BoardEditContent = ({ data, boardType }: any) => {
   const navigate = useNavigate();
@@ -10,6 +11,19 @@ const BoardEditContent = ({ data, boardType }: any) => {
   const { mutate } = useBoardQuery();
   const updateFreeMutate = mutate.updateIssuesFromFreeBoard();
   const updateQuestionMutate = mutate.updateIssuesFromFreeBoard();
+
+  useEffect(() => {
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <>

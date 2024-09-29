@@ -1,7 +1,8 @@
-import BoardListContent from "@components/organisms/BoardListGrid/Content";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { QUESTION_BOARD } from "@src/variables/common-variable.ts";
 import { useParams } from "react-router-dom";
+import styled from "@components/templates/FreeBoardDetailTemplate/style.ts";
+import BoardDetailContent from "@components/organisms/BoardDetailGrid/Content";
 
 const QuestionBoardDetailTemplate = () => {
   const { id } = useParams();
@@ -14,8 +15,8 @@ const QuestionBoardDetailTemplate = () => {
     return <>isLoading...</>;
   }
   return (
-    <div>
-      <BoardListContent data={data} boardType={QUESTION_BOARD} />
+    <div css={styled.wrapper}>
+      <BoardDetailContent data={data} boardType={QUESTION_BOARD} />
     </div>
   );
 };

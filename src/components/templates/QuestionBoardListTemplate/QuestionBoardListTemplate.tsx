@@ -32,10 +32,10 @@ const QuestionBoardListTemplate = () => {
     <div css={styled.wrapper}>
       <BoardListContent
         data={data}
+        filters={filters}
         boardType={QUESTION_BOARD}
         onSearch={handleSearch}
         onChangePage={handleChangePage}
-        currentPage={filters.page}
       />
     </div>
   );

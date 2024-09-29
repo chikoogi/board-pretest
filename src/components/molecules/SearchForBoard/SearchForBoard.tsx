@@ -1,7 +1,9 @@
 import styled from "./style.ts";
 import { Button, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useModal } from "@src/provider/ModalProvider.tsx";
+import Alert from "@components/atoms/Alert";
 
 const SEARCH_TYPE_LIST = [
   {
@@ -14,13 +16,32 @@ const SEARCH_TYPE_LIST = [
   },
 ];
 
-const SearchForBoard = ({ boardType, onSearch }: any) => {
+const SearchForBoard = ({ boardType, onSearch, filters }: any) => {
   const navigate = useNavigate();
-  const [searchType, setSearchType] = useState<string>("title");
+  const [filterType, setFilterType] = useState<string>("title");
   const [searchStr, setSearchStr] = useState<string>("");
+  const { showModal, closeModal } = useModal();
+
   const handleChange = (event: SelectChangeEvent) => {
-    setSearchType(event.target.value as string);
+    setFilterType(event.target.value as string);
   };
+
+  const handleSearch = () => {
+    if (searchStr === "") {
+      showModal(Alert, {
+        message: "검색어를 입력하세요.",
+        confirmButtonLabel: "확인",
+        onClose: closeModal,
+      });
+    } else {
+      onSearch({ filterType, searchStr });
+    }
+  };
+
+  useEffect(() => {
+    setFilterType(filters.filterType);
+    setSearchStr(filters.searchStr);
+  }, [filters.filterType, filters.searchStr]);
 
   return (
     <>
@@ -30,7 +51,7 @@ const SearchForBoard = ({ boardType, onSearch }: any) => {
             <Select
               labelId="demo-select-small-label"
               id="demo-select-small"
-              value={searchType}
+              value={filterType}
               label="Type"
               onChange={handleChange}
             >
@@ -48,7 +69,8 @@ const SearchForBoard = ({ boardType, onSearch }: any) => {
               onChange={(e) => setSearchStr(e.target.value)}
             />
           </div>
-          <Button onClick={() => onSearch({ searchType, searchStr })}>검색</Button>
+          <Button onClick={handleSearch}>검색</Button>
+          {searchStr !== "" && <Button onClick={() => setSearchStr("")}>검색 취소</Button>}
         </div>
         <div css={styled.rightContainer}>
           <Button onClick={() => navigate(`../write`)}>글쓰기</Button>

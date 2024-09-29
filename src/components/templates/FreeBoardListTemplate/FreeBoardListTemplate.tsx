@@ -29,10 +29,10 @@ const FreeBoardListTemplate = () => {
     <div css={styled.wrapper}>
       <BoardListContent
         data={data}
+        filters={filters}
         boardType={FREE_BOARD}
         onSearch={handleSearch}
         onChangePage={handleChangePage}
-        currentPage={filters.page}
       />
     </div>
   );

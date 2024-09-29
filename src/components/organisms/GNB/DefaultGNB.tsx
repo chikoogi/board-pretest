@@ -11,7 +11,6 @@ const DefaultGNB = () => {
   const location = useLocation();
 
   const mainPath = location.pathname.split("/");
-  console.log(mainPath);
 
   const currentPage =
     NAVIGATE_LIST.find((n) => location.pathname === n.path)?.name || "페이지 없음";

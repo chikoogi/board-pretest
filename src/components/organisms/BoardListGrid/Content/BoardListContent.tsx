@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Pagination from "@components/atoms/Pagination/Pagination.tsx";
 import { PER_PAGE } from "@src/common/queries/queries.ts";
 
-const BoardListContent = ({ data, boardType, onSearch, onChangePage, currentPage }: any) => {
+const BoardListContent = ({ data, boardType, onSearch, onChangePage, filters }: any) => {
   const [totalRows, setTotalRows] = useState<number>(0);
   const [rows, setRows] = useState<any[]>([]);
 
@@ -19,13 +19,13 @@ const BoardListContent = ({ data, boardType, onSearch, onChangePage, currentPage
   return (
     <div css={styled.wrapper}>
       <div>
-        <SearchForBoard boardType={boardType} onSearch={onSearch} />
+        <SearchForBoard boardType={boardType} onSearch={onSearch} filters={filters} />
         <TableForBoard rows={rows} totalRows={totalRows} onChangePage={onChangePage} />
         <Pagination
           totalItems={totalRows}
           itemsPerPage={PER_PAGE}
           onPageChange={onChangePage}
-          currentPage={currentPage}
+          currentPage={filters.page}
         />
       </div>
     </div>

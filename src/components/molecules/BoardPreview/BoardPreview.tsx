@@ -10,7 +10,7 @@ const BoardPreview = ({ data, boardType }: any) => {
 
   useEffect(() => {
     if (data) {
-      // setRows(data.items);
+      setRows(data.items);
     }
   }, [data]);
 
