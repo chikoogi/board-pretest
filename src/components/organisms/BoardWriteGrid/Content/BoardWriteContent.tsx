@@ -19,8 +19,10 @@ const BoardWriteContent = ({ boardType }: any) => {
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      event.preventDefault();
-      event.returnValue = "";
+      if (isDirty) {
+        event.preventDefault();
+        event.returnValue = "";
+      }
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
