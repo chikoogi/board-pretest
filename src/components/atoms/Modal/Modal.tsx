@@ -35,11 +35,6 @@ const Modal = ({ isOpen, children, onClose }: ModalProps) => {
     <div css={styled.wrapper}>
       <div css={styled.backWrapper}></div>
       <div css={styled.subWrapper}>
-        {/*<div className={"header"}>
-          <button className={"absolute text-black right-5 top-5"} onClick={onClose}>
-            <Close />
-          </button>
-        </div>*/}
         <div css={styled.childrenWrapper}>{children}</div>
       </div>
     </div>,

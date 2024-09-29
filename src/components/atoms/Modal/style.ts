@@ -22,8 +22,8 @@ export default {
     background-color: #000;
   `,
   subWrapper: css`
-    background-color: #fff;
-    padding: 10px;
+    //background-color: #fff;
+    //padding: 10px;
     position: relative;
   `,
   childrenWrapper: css`
