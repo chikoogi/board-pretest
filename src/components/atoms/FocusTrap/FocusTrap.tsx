@@ -7,8 +7,9 @@ const focusableElementsContains = (
   return Array.from(elements).includes(activeElement as HTMLElement);
 };
 
-const FocusTrap = ({ children }: any) => {
+const FocusTrap = ({ isOpen, children }: any) => {
   const modalRef = useRef(null);
+  const previousFocusedElement = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -32,12 +33,19 @@ const FocusTrap = ({ children }: any) => {
       }
     };
 
-    document.addEventListener("keydown", handleKeyDown);
-
+    if (isOpen) {
+      previousFocusedElement.current = document.activeElement as HTMLElement;
+      document.addEventListener("keydown", handleKeyDown);
+    }
+    console.log(previousFocusedElement.current);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
+      console.log(previousFocusedElement.current);
+      if (previousFocusedElement.current) {
+        previousFocusedElement.current.focus();
+      }
     };
-  }, []);
+  }, [isOpen]);
 
   return <div ref={modalRef}>{children}</div>;
 };

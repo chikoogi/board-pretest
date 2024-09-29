@@ -12,43 +12,8 @@ interface ModalProps {
 
 const Modal = ({ isOpen, children, onClose }: ModalProps) => {
   const [mounted, setMounted] = useState(false);
-  const modalRef = useRef<HTMLDivElement | null>(null);
-  const currentFocusIndex = useRef(-1);
 
   useEffect(() => {
-    /*    const handleKeyDown = (e: KeyboardEvent) => {
-      if (modalRef.current) {
-        console.log(modalRef.current);
-
-        const focusableElements = modalRef.current.querySelectorAll(
-          "a[href], button, textarea, input, select"
-        );
-
-        if (focusableElements.length === 0) return;
-
-        const firstElement = focusableElements[0] as HTMLElement;
-        const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
-
-        console.log(document.activeElement, focusableElements);
-
-        if (e.key === "Tab") {
-          // Shift + Tab: 첫 번째 요소에서 마지막 요소로 이동
-          if (e.shiftKey) {
-            if (document.activeElement !== firstElement) return;
-            console.log("shift");
-            lastElement.focus();
-            e.preventDefault();
-          } else if (!e.shiftKey) {
-            console.log(document.activeElement !== lastElement);
-            if (document.activeElement !== lastElement) return;
-            console.log("!shift");
-            firstElement.focus();
-            e.preventDefault();
-          }
-        }
-      }
-    };*/
-
     if (isOpen && mounted) {
       document.body.style.overflow = "hidden";
     } else {
@@ -67,7 +32,7 @@ const Modal = ({ isOpen, children, onClose }: ModalProps) => {
 
   if (!isOpen || !mounted) return null;
   return createPortal(
-    <FocusTrap>
+    <FocusTrap isOpen={isOpen}>
       <div css={styled.wrapper}>
         <div css={styled.backWrapper} />
         <div css={styled.subWrapper}>

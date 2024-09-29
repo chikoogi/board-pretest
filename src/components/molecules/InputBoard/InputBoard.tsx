@@ -44,6 +44,7 @@ const InputBoard = ({ item, handleApply, handleDirty }: any) => {
       <div css={styled.actionContainer}>
         <Button
           onClick={() => {
+            handleDirty(false);
             const dataSet = {
               title: title,
               body: description,
