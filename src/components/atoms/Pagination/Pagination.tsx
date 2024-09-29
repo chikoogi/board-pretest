@@ -20,7 +20,7 @@ const Pagination = ({
   const getPageNumbers = () => {
     const startPage = Math.floor((currentPage - 1) / maxPageNumbers) * maxPageNumbers + 1;
     const endPage = Math.min(totalPages, startPage + maxPageNumbers - 1);
-    let pages = [];
+    const pages = [];
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
     }
