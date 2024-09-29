@@ -69,7 +69,9 @@ const SearchForBoard = ({ boardType, onSearch, filters }: any) => {
               onChange={(e) => setSearchStr(e.target.value)}
             />
           </div>
-          <Button onClick={handleSearch}>검색</Button>
+          <Button variant="outlined" onClick={handleSearch}>
+            검색
+          </Button>
           {searchStr !== "" && <Button onClick={() => setSearchStr("")}>검색 취소</Button>}
         </div>
         <div css={styled.rightContainer}>

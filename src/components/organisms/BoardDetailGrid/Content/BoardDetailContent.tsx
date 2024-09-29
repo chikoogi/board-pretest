@@ -4,9 +4,12 @@ import { FREE_BOARD, QUESTION_BOARD } from "@src/variables/common-variable.ts";
 import { Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
+import { useModal } from "@src/provider/ModalProvider.tsx";
+import Confirm from "@components/atoms/Confirm";
 
 const BoardDetailContent = ({ data, boardId, boardType }: any) => {
   const navigate = useNavigate();
+  const { showModal, closeModal } = useModal();
 
   const { mutate } = useBoardQuery();
   const deleteIssues = mutate.deleteIssues();
@@ -32,13 +35,20 @@ const BoardDetailContent = ({ data, boardId, boardType }: any) => {
           </Button>
           <Button
             onClick={() => {
-              deleteIssues.mutate(data.node_id, {
+              showModal(Confirm, {
+                message: "삭제하시겠습니까?",
+                onConfirm: () => {
+                  navigate("../list");
+                },
+                onCancel: () => closeModal(),
+              });
+              /*              deleteIssues.mutate(data.node_id, {
                 onSuccess: (res) => {
                   console.log("comp res", res);
                   // navigate("../list");
                   // navigate(`/${boardType}/list`);
                 },
-              });
+              });*/
             }}
           >
             삭제

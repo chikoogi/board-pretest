@@ -1,13 +1,12 @@
 import styled from "./style.ts";
 import { Button, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TextAreaStyledA from "@components/atoms/TextAreaStyledA/TextAreaStyledA.tsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { FREE_BOARD } from "@src/variables/common-variable.ts";
 
 const InputBoard = ({ item, handleApply, handleDirty }: any) => {
-  const { boardType } = useParams();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -29,6 +28,7 @@ const InputBoard = ({ item, handleApply, handleDirty }: any) => {
             handleDirty(true);
           }}
           fullWidth
+          autoFocus
         />
       </div>
       <div css={styled.descriptionContainer}>

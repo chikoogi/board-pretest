@@ -23,7 +23,14 @@ const Confirm = ({
       <p css={styled.messageContainer}>{message}</p>
       <div css={styled.actionContainer}>
         <Button onClick={onCancel}>{cancelLabel}</Button>
-        <Button onClick={onConfirm}>{confirmLabel}</Button>
+        <Button
+          onClick={() => {
+            onConfirm();
+            // onCancel();
+          }}
+        >
+          {confirmLabel}
+        </Button>
       </div>
     </div>
   );
