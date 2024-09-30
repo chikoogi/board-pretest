@@ -55,7 +55,7 @@ const InputBoard = <T extends BoardItemProps>({
           rows={15}
           helperText={isDesValid ? "내용을 입력해주세요." : ""}
           multiline={true}
-          error={isTitleValid}
+          error={isDesValid}
           focused={isDesValid}
         />
       </div>

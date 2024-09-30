@@ -26,7 +26,7 @@ const BoardEditContent = ({
   useBeforeUnload(isDirty && enableDirty);
   const { mutate } = useBoardQuery();
   const updateFreeMutate = mutate.updateIssuesFromFreeBoard();
-  const updateQuestionMutate = mutate.updateIssuesFromFreeBoard();
+  const updateQuestionMutate = mutate.updateIssuesFromQuestionBoard();
 
   useEffect(() => {
     if (data) {
