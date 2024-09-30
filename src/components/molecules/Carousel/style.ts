@@ -17,15 +17,15 @@ export default {
     height: 100%;
     overflow: hidden;
   `,
-  slides: (currentIndex: number) => css`
+  slides: (currentIndex: number, isTransitioning: boolean) => css`
     display: flex;
-    transition: transform 0.5s ease-in-out;
+    transition: ${isTransitioning ? "transform 0.5s ease" : "none"};
     transform: translateX(-${currentIndex * 100}%);
   `,
   slideItem: css`
     width: 100%;
     height: 400px;
-    transition: transform 0.5s ease;
+    //transition: transform 0.5s ease;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -22,7 +22,7 @@ const BoardPreview = ({ data, boardType }: any) => {
       </div>
       <div css={styled.listContainer}>
         {rows.length === 0 && <div css={styled.emptyContainer}>등록된 게시글이 없습니다.</div>}
-        {rows.map((r) => (
+        {rows.map((r: any) => (
           <div
             key={r.id}
             onClick={() => {

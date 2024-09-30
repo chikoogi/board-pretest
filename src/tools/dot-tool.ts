@@ -15,7 +15,7 @@ const DotStyle = {
     transform: "scale(1)",
   },
   [EnumDotType.ACTIVE]: {
-    width: 26,
+    width: 12,
     height: 12,
     borderRadius: 6,
     transform: "scale(1)",
