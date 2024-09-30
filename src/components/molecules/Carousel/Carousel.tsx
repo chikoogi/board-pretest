@@ -2,7 +2,7 @@ import Circle from "@components/atoms/Circle";
 import { useEffect, useRef, useState } from "react";
 import { getDotStyle } from "@src/tools/dot-tool.ts";
 import styled from "./style.ts";
-import { ArrowLeft, ArrowRight } from "@mui/icons-material";
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 const Carousel = ({ images }: any) => {
   const [currentIndex, setCurrentIndex] = useState(1);
@@ -34,11 +34,11 @@ const Carousel = ({ images }: any) => {
 
   return (
     <div css={styled.wrapper}>
-      <IconButton css={styled.leftBtn} onClick={prevSlide}>
-        <ArrowLeft />
+      <IconButton className="arrow" color={"primary"} css={styled.leftBtn} onClick={prevSlide}>
+        <ChevronLeft />
       </IconButton>
-      <IconButton css={styled.rightBtn} onClick={nextSlide}>
-        <ArrowRight />
+      <IconButton className="arrow" css={styled.rightBtn} onClick={nextSlide}>
+        <ChevronRight />
       </IconButton>
       <div className="carousel-slide-wrapper" css={styled.slideWrapper}>
         <div
@@ -70,7 +70,7 @@ const Carousel = ({ images }: any) => {
                   color={i === currentIndex - 1 ? "#6D6ADA" : "#42424a"}
                   border={i === currentIndex - 1 ? "none" : "1px solid #84838d"}
                   onClick={() => {
-                    setCurrentIndex(i);
+                    setCurrentIndex(i + 1);
                   }}
                   style={dotStyle}
                 />

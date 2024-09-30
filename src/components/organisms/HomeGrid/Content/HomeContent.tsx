@@ -1,8 +1,11 @@
 import styled from "./style.ts";
 import Carousel from "@components/molecules/Carousel/Carousel.tsx";
-import { FREE_BOARD, MOCK_IMAGE_LIST, QUESTION_BOARD } from "@src/variables/common-variable.ts";
+import { FREE_BOARD, QUESTION_BOARD } from "@src/variables/common-variable.ts";
 import BoardPreview from "@components/molecules/BoardPreview/BoardPreview.tsx";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
+import { fakerKO as faker } from "@faker-js/faker";
+
+export const MOCK_IMAGE_LIST = Array.from({ length: 4 }, (_, idx) => faker.image.urlPicsumPhotos());
 
 const HomeContent = () => {
   const { query } = useBoardQuery();

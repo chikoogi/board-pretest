@@ -11,6 +11,15 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    &:hover {
+      .arrow {
+        visibility: visible;
+        &:hover {
+          color: #121212;
+          border: 1px solid #121212;
+        }
+      }
+    }
   `,
   slideWrapper: css`
     width: 100%;
@@ -51,9 +60,11 @@ export default {
     top: 50%;
     left: 40px;
     color: #fff;
-    background-color: #121212;
+    background-color: #333;
     transform: translate3d(0, -50%, 0);
     z-index: 10;
+
+    visibility: hidden;
   `,
   rightBtn: css`
     position: absolute;
@@ -63,5 +74,6 @@ export default {
     background-color: #121212;
     transform: translate3d(0, -50%, 0);
     z-index: 10;
+    visibility: hidden;
   `,
 };

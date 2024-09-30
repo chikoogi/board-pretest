@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 
-const BOARD_HEIGHT = 400;
+const BOARD_HEIGHT = 300;
 export default {
   wrapper: css`
     width: 100%;
@@ -9,6 +9,8 @@ export default {
   carouselWrapper: css`
     width: 100%;
     height: calc(100% - ${BOARD_HEIGHT}px);
+    min-height: 450px;
+    margin-bottom: 30px;
   `,
   boardWrapper: css`
     width: 100%;
