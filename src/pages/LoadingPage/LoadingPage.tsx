@@ -1,8 +1,8 @@
 import { ReactNode, Suspense } from "react";
-import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
+import { LinearProgress } from "@mui/material";
 
-const LoadingPage = ({ size, page }: { page: ReactNode; size?: number }) => (
-  <Suspense fallback={<LoadingDot />}>{page}</Suspense>
+const LoadingPage = ({ children }: { children: ReactNode }) => (
+  <Suspense fallback={<LinearProgress />}>{children}</Suspense>
 );
 
 export default LoadingPage;

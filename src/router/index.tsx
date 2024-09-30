@@ -1,8 +1,8 @@
 import { lazy } from "react";
 import { createBrowserRouter, Navigate, RouteObject } from "react-router-dom";
+import DefaultTemplate from "@components/templates/DefaultTemplate";
+import LoadingPage from "@src/pages/LoadingPage";
 
-const LoadingPage = lazy(() => import("@src/pages/LoadingPage"));
-const DefaultTemplate = lazy(() => import("@src/components/templates/DefaultTemplate"));
 const TotalHomePage = lazy(() => import("@src/pages/TotalHomePage"));
 const FreeBoardListPage = lazy(() => import("@src/pages/FreeBoardListPage/FreeBoardListPage.tsx"));
 const FreeBoardDetailPage = lazy(
@@ -30,7 +30,7 @@ const QuestionBoardEditPage = lazy(
 const routeObjectList: RouteObject[] = [
   {
     path: "/*",
-    element: <LoadingPage size={5} page={<DefaultTemplate />} />,
+    element: <DefaultTemplate />,
     children: [
       { index: true, element: <Navigate to={"home"} /> },
       {
