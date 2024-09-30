@@ -26,8 +26,10 @@ const BoardDetailContent = ({ data, boardId, boardType }: any) => {
         <ReadBoard item={data} />
       </div>
       <div css={styled.actionContainer}>
-        <div>
+        <div css={styled.leftAction}>
           <Button
+            variant="outlined"
+            color={"info"}
             onClick={() => {
               navigate(`../edit/${data.number}`);
             }}
@@ -35,6 +37,8 @@ const BoardDetailContent = ({ data, boardId, boardType }: any) => {
             수정
           </Button>
           <Button
+            variant="outlined"
+            color={"warning"}
             onClick={() => {
               showModal(Confirm, {
                 message: "삭제하시겠습니까?",
@@ -55,8 +59,10 @@ const BoardDetailContent = ({ data, boardId, boardType }: any) => {
             삭제
           </Button>
         </div>
-        <div>
-          <Button onClick={() => navigate("../list")}>목록</Button>
+        <div css={styled.rightAction}>
+          <Button variant="contained" onClick={() => navigate("../list")}>
+            목록
+          </Button>
         </div>
       </div>
     </div>
