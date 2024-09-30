@@ -1,10 +1,11 @@
 import Circle from "@components/atoms/Circle";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { getDotStyle } from "@src/tools/dot-tool.ts";
 import styled from "./style.ts";
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-const Carousel = ({ images }: any) => {
+
+const Carousel = ({ images }: { images: string[] }) => {
   const [currentIndex, setCurrentIndex] = useState(1);
 
   const [isTransitioning, setIsTransitioning] = useState(false);

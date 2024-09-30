@@ -14,7 +14,16 @@ const BoardDetailContent = ({ data, boardId, boardType }: any) => {
   const { showModal, closeModal } = useModal();
 
   const { mutate } = useBoardQuery();
+
+  /* 이슈 삭제 status closed 로 대체
+    const deleteIssues = mutate.deleteIssues();
+  */
+
   const deleteIssues = mutate.deleteIssues();
+  /*  const deleteIssues =
+    boardType === FREE_BOARD
+      ? mutate.deleteIssuesFromFreeBoard()
+      : mutate.deleteIssuesFromQuestionBoard();*/
 
   useEffect(() => {
     if (data) {
@@ -50,6 +59,7 @@ const BoardDetailContent = ({ data, boardId, boardType }: any) => {
               showModal(Confirm, {
                 message: "삭제하시겠습니까?",
                 onConfirm: () => {
+                  deleteIssues.mutate(data.node_id);
                   navigate("../list");
                 },
                 onCancel: () => closeModal(),

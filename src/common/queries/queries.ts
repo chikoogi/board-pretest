@@ -17,10 +17,10 @@ export const useBoardQuery = () => {
       queryFn: async ({ queryKey }) => {
         // const res = await axiosInstanceFree.get(`/issues?per_page=${PER_PAGE}`);
         const fRes = await axiosInstance.get(
-          `/search/issues?q=repo:${REPO_OWNER}/freeboard+is:issue&per_page=5`
+          `/search/issues?q=repo:${REPO_OWNER}/freeboard+is:issue+is:open&per_page=5`
         );
         const qRes = await axiosInstance.get(
-          `/search/issues?q=repo:${REPO_OWNER}/questionboard+is:issue&per_page=5`
+          `/search/issues?q=repo:${REPO_OWNER}/questionboard+is:issue+is:open&per_page=5`
         );
 
         if (isAxiosError(fRes)) {
@@ -56,7 +56,7 @@ export const useBoardQuery = () => {
         const filter = searchStr ? `${searchStr}+in:${filterType}` : "";
 
         const res = await axiosInstance.get(
-          `/search/issues?q=repo:${REPO_OWNER}/freeboard+is:issue+${filter}&per_page=${PER_PAGE}&page=${page}`
+          `/search/issues?q=repo:${REPO_OWNER}/freeboard+is:issue+is:open+${filter}&per_page=${PER_PAGE}&page=${page}`
         );
 
         if (isAxiosError(res)) {
@@ -103,7 +103,7 @@ export const useBoardQuery = () => {
         const filter = searchStr ? `${searchStr}+in:${filterType}` : "";
 
         const res = await axiosInstance.get(
-          `/search/issues?q=repo:${REPO_OWNER}/questionboard+is:issue+${filter}&per_page=${PER_PAGE}&page=${page}`
+          `/search/issues?q=repo:${REPO_OWNER}/questionboard+is:issue+is:open+${filter}&per_page=${PER_PAGE}&page=${page}`
         );
 
         if (isAxiosError(res)) {
@@ -148,9 +148,8 @@ export const useBoardQuery = () => {
 
         return res.data;
       },
-      onSuccess: () => {
-        console.log("query");
-        // queryClient.invalidateQueries({ queryKey: ["board, freeBoard"] });
+      onSuccess: async () => {
+        // await queryClient.invalidateQueries({ queryKey: ["board"] });
       },
       onSettled: async (data) => {
         // return queryClient.invalidateQueries({ queryKey });
@@ -173,8 +172,8 @@ export const useBoardQuery = () => {
 
         return res.data;
       },
-      onSuccess: () => {
-        // queryClient.invalidateQueries({ queryKey: ["board, freeboard"] });
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ["board", "freeBoard"] });
       },
       onSettled: async (data) => {
         // return queryClient.invalidateQueries({ queryKey });
@@ -189,14 +188,8 @@ export const useBoardQuery = () => {
 
     const mutation = useMutation({
       mutationFn: async (id: string) => {
-        const res = await axiosInstanceGraphGL.post(``, {
-          query: `
-				mutation {
-					deleteIssue(input: {issueId: "${id}", clientMutationId: "delete Free Board Issue" }) {
-						clientMutationId
-					}
-				}
-			`,
+        const res = await axiosInstanceFree.patch(`/issues/${id}`, {
+          state: "closed",
         });
 
         if (isAxiosError(res)) {
@@ -205,8 +198,9 @@ export const useBoardQuery = () => {
 
         return res.data;
       },
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["board, freeBoard"] });
+      onSuccess: async (res) => {
+        await queryClient.cancelQueries({ queryKey: ["board", "freeBoard"] });
+        await queryClient.invalidateQueries({ queryKey: ["board", "freeBoard"] });
       },
       onSettled: async (data) => {
         // return queryClient.invalidateQueries({ queryKey });
@@ -229,8 +223,8 @@ export const useBoardQuery = () => {
 
         return res.data;
       },
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["board, questionBoard"] });
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ["board", "questionBoard"] });
       },
       onSettled: async (data) => {
         // return queryClient.invalidateQueries({ queryKey });
@@ -253,7 +247,9 @@ export const useBoardQuery = () => {
 
         return res.data;
       },
-      onSuccess: () => {},
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ["board", "questionBoard"] });
+      },
       onSettled: async (data) => {},
     });
 
@@ -265,14 +261,8 @@ export const useBoardQuery = () => {
 
     const mutation = useMutation({
       mutationFn: async (id: string) => {
-        const res = await axiosInstanceGraphGL.post(``, {
-          query: `
-				mutation {
-					deleteIssue(input: {issueId: "${id}", clientMutationId: "delete Free Board Issue" }) {
-						clientMutationId
-					}
-				}
-			`,
+        const res = await axiosInstanceQuestion.patch(`/issues/${id}`, {
+          state: "closed",
         });
 
         if (isAxiosError(res)) {
@@ -281,8 +271,8 @@ export const useBoardQuery = () => {
 
         return res.data;
       },
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["board, question"] });
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ["board", "questionBoard"] });
       },
       onSettled: async (data) => {
         // return queryClient.invalidateQueries({ queryKey });
@@ -313,8 +303,8 @@ export const useBoardQuery = () => {
 
         return res.data;
       },
-      onSuccess: async (res) => {
-        console.log("query res", res);
+      onSuccess: async () => {
+        await queryClient.invalidateQueries({ queryKey: ["board"] });
       },
       onSettled: async (data) => {},
     });
@@ -333,12 +323,17 @@ export const useBoardQuery = () => {
     mutate: {
       addIssuesFromFreeBoard: useAddIssuesFromFreeBoard,
       updateIssuesFromFreeBoard: useUpdateIssuesFromFreeBoard,
-      // deleteIssuesFromFreeBoard: useDeleteIssuesFromFreeBoard,
+
+      /* issue 삭제 대체 state=>closed */
+      deleteIssuesFromFreeBoard: useDeleteIssuesFromFreeBoard,
 
       addIssuesFromQuestionBoard: useAddIssuesFromQuestionBoard,
       updateIssuesFromQuestionBoard: useUpdateIssuesFromQuestionBoard,
-      // deleteIssuesFromQuestionBoard: useDeleteIssuesFromQuestionBoard,
 
+      /* issue 삭제 대체 state=>closed */
+      deleteIssuesFromQuestionBoard: useDeleteIssuesFromQuestionBoard,
+
+      /* issue 삭제 GraphGL */
       deleteIssues: useDeleteIssues,
     },
   };

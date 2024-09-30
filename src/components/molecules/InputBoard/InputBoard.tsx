@@ -19,9 +19,7 @@ const InputBoard = ({ item, handleApply, handleDirty }: any) => {
   return (
     <div css={styled.wrapper}>
       <div css={styled.titleContainer}>
-        {/*<div css={styled.label}>제목</div>*/}
         <TextField
-          // label={"제목"}
           label={"제목"}
           value={title}
           onChange={(e) => {
@@ -37,7 +35,6 @@ const InputBoard = ({ item, handleApply, handleDirty }: any) => {
         />
       </div>
       <div css={styled.descriptionContainer}>
-        {/*<div css={styled.label}>내용</div>*/}
         <TextField
           label={"내용"}
           value={description}

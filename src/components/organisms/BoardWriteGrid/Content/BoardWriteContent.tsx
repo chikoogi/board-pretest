@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import ReactRouterPrompt from "react-router-prompt";
 import Confirm from "@components/atoms/Confirm";
 import Modal from "@components/atoms/Modal";
+import { useQueryClient } from "@tanstack/react-query";
 
 const BoardWriteContent = ({ boardType, enableDirty = true }: any) => {
   const [isDirty, setIsDirty] = useState(false);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const { mutate } = useBoardQuery();
   const addFreeMutate = mutate.addIssuesFromFreeBoard();
@@ -61,8 +63,12 @@ const BoardWriteContent = ({ boardType, enableDirty = true }: any) => {
             handleApply={(dataSet: any) => {
               if (boardType === FREE_BOARD) {
                 addFreeMutate.mutate(dataSet, {
-                  onSuccess: (res: any) => {
-                    navigate(`/${boardType}/list`);
+                  onSuccess: async (res: any) => {
+                    const boardId = res.number;
+                    await queryClient.cancelQueries({ queryKey: ["board"] });
+                    await queryClient.invalidateQueries({ queryKey: ["board"] });
+
+                    navigate(`/home`);
                   },
                 });
               } else if (boardType === QUESTION_BOARD) {
