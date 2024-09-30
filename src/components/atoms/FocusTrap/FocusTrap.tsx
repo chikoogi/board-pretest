@@ -2,13 +2,13 @@ import { useEffect, useRef } from "react";
 
 const focusableElementsContains = (
   activeElement: Element | null,
-  elements: NodeListOf<HTMLElement>
+  elements: NodeListOf<Element>
 ) => {
   return Array.from(elements).includes(activeElement as HTMLElement);
 };
 
 const FocusTrap = ({ isOpen, children }: any) => {
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
   const previousFocusedElement = useRef<HTMLElement | null>(null);
 
   useEffect(() => {

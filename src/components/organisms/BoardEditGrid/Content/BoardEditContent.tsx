@@ -41,9 +41,9 @@ const BoardEditContent = ({ data, boardType }: any) => {
               <Confirm
                 title={"작성 중인 내용이 있습니다."}
                 message={
-                  <div>
+                  <>
                     이 페이지를 벗어나면 작성중인 내용이 사라집니다. <br /> 이동하시겠습니까?
-                  </div>
+                  </>
                 }
                 confirmLabel={"이동하기"}
                 cancelLabel={"취소"}

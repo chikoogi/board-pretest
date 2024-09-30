@@ -5,17 +5,25 @@ const LoadingPage = lazy(() => import("@src/pages/LoadingPage"));
 const DefaultTemplate = lazy(() => import("@src/components/templates/DefaultTemplate"));
 const TotalHomePage = lazy(() => import("@src/pages/TotalHomePage"));
 const FreeBoardListPage = lazy(() => import("@src/pages/FreeBoardListPage/FreeBoardListPage.tsx"));
-const QuestionBoardPage = lazy(
+const FreeBoardDetailPage = lazy(
+  () => import("@src/pages/FreeBoardDetailPage/FreeBoardDetailPage.tsx")
+);
+const FreeBoardEditPage = lazy(() => import("@src/pages/FreeBoardEditPage/FreeBoardEditPage.tsx"));
+const FreeBoardWritePage = lazy(
+  () => import("@src/pages/FreeBoardWritePage/FreeBoardWritePage.tsx")
+);
+const QuestionBoardListPage = lazy(
   () => import("@src/pages/QuestionBoardListPage/QuestionBoardListPage.tsx")
 );
-
-import FreeBoardDetailPage from "@src/pages/FreeBoardDetialPage/FreeBoardDetailPage.tsx";
-import FreeBoardEditPage from "@src/pages/FreeBoardEditPage/FreeBoardEditPage.tsx";
-import FreeBoardWritePage from "@src/pages/FreeBoardWritePage/FreeBoardWritePage.tsx";
-import QuestionBoardListPage from "@src/pages/QuestionBoardListPage";
-import QuestionBoardWritePage from "@src/pages/QuestionBoardWritePage";
-import QuestionBoardDetailPage from "@src/pages/QuestionBoardDetailPage";
-import QuestionBoardEditPage from "@src/pages/QuestionBoardEditPage";
+const QuestionBoardWritePage = lazy(
+  () => import("@src/pages/QuestionBoardWritePage/QuestionBoardWritePage.tsx")
+);
+const QuestionBoardDetailPage = lazy(
+  () => import("@src/pages/QuestionBoardDetailPage/QuestionBoardDetailPage.tsx")
+);
+const QuestionBoardEditPage = lazy(
+  () => import("@src/pages/QuestionBoardEditPage/QuestionBoardEditPage.tsx")
+);
 
 /* @TODO not found 페이지 필요 */
 

@@ -48,15 +48,20 @@ const Carousel = ({ images }: any) => {
           onTransitionEnd={handleTransitionEnd}
         >
           <div className="carousel-slide" css={styled.slideItem}>
-            <img src={images[images.length - 1]} alt="carousel slide" css={styled.imgWrapper} />
+            <img
+              src={images[images.length - 1]}
+              alt="carousel slide"
+              css={styled.imgWrapper}
+              loading="lazy"
+            />
           </div>
           {images.map((image: string, index: number) => (
             <div className="carousel-slide" key={index} css={styled.slideItem}>
-              <img src={image} alt="carousel slide" css={styled.imgWrapper} />
+              <img src={image} alt="carousel slide" css={styled.imgWrapper} loading="lazy" />
             </div>
           ))}
           <div className="carousel-slide" css={styled.slideItem}>
-            <img src={images[0]} alt="carousel slide" css={styled.imgWrapper} />
+            <img src={images[0]} alt="carousel slide" css={styled.imgWrapper} loading="lazy" />
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Divider, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Divider } from "@mui/material";
 import { useEffect, useState } from "react";
 import { FREE_BOARD, QUESTION_BOARD } from "@src/variables/common-variable.ts";
 import { useNavigate } from "react-router-dom";

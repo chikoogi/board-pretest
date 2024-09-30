@@ -1,5 +1,6 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import styled from "./style.ts";
+import { useEffect } from "react";
 
 const NAVIGATE_LIST = [
   { name: "홈", path: "/home" },
@@ -10,24 +11,36 @@ const NAVIGATE_LIST = [
 const DefaultGNB = () => {
   const location = useLocation();
 
-  const mainPath = location.pathname.split("/");
+  useEffect(() => {
+    const path = location.pathname;
 
-  const currentPage =
-    NAVIGATE_LIST.find((n) => location.pathname === n.path)?.name || "페이지 없음";
+    if (path.includes("home")) {
+      document.title = "홈";
+    } else if (path.includes("questionBoard") || path.includes("freeBoard")) {
+      if (path.includes("write")) {
+        document.title = "글쓰기";
+      } else if (path.includes("edit")) {
+        document.title = "글수정";
+      } else {
+        document.title = "게시판";
+      }
+    } else {
+      document.title = "-";
+    }
+  }, [location]);
 
   return (
     <div css={styled.wrapper}>
-      <div css={styled.headerWrapper}>
-        {mainPath[1] === "home" && <>홈</>}
-        {(mainPath[1] === "questionBoard" || mainPath[1] === "freeBoard") && <>게시판</>}
-      </div>
       <nav className="default-gnb-wrapper" css={styled.navWrapper}>
         <div css={styled.ulWrapper}>
           {NAVIGATE_LIST.map((n) => (
             <div css={styled.liWrapper} key={n.name}>
-              <Link to={n.path} className="gnb-link" css={styled.LinkWrapper}>
+              <NavLink
+                to={n.path}
+                className={({ isActive }) => ["link", isActive ? "active" : ""].join(" ")}
+              >
                 {n.name}
-              </Link>
+              </NavLink>
             </div>
           ))}
         </div>

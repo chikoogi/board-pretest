@@ -4,15 +4,13 @@ export default {
   wrapper: css`
     width: 100%;
     height: 100%;
-    border: 1px solid #121212;
-    padding: 12px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    padding: 15px 20px;
     border-radius: 8px;
 
     display: flex;
     flex-direction: column;
     gap: 12px;
-    //justify-content: start;
-    //align-items: start;
   `,
   title: css`
     width: 100%;
@@ -23,21 +21,30 @@ export default {
   listContainer: css`
     width: 100%;
     height: calc(100% - 30px);
-    //display: flex;
-    //justify-content: center;
-    //align-items: start;
+
+    display: flex;
+    align-items: start;
   `,
   listSubContainer: css`
     width: 100%;
     display: flex;
     flex-direction: column;
+    gap: 5px;
+    //align-items: center;
+    //justify-content: space-between;
     height: 200px;
   `,
   rowContainer: css`
+    cursor: pointer;
     width: 100%;
     height: 40px;
     display: flex;
     align-items: center;
+    padding: 5px 10px;
+    border-radius: 4px;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
     div:nth-of-type(1) {
       width: calc(100% - 40px);
       overflow: hidden;

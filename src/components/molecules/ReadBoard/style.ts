@@ -24,7 +24,10 @@ export default {
   `,
   contentContainer: css`
     padding: 20px;
+    min-height: 450px;
     max-height: 500px;
     overflow: auto;
+    border-top: 1px solid #121212;
+    border-bottom: 1px solid #121212;
   `,
 };

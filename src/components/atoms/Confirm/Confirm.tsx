@@ -20,7 +20,9 @@ const Confirm = ({
   return (
     <div css={styled.wrapper}>
       {title && <div css={styled.titleContainer}>{title}</div>}
-      <p css={styled.messageContainer}>{message}</p>
+      <div css={styled.messageContainer}>
+        <>{message}</>
+      </div>
       <div css={styled.actionContainer}>
         <Button onClick={onCancel}>{cancelLabel}</Button>
         <Button

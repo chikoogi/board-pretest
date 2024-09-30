@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 
-const GNB_HEIGHT = 100;
+const GNB_HEIGHT = 70;
 export default {
   wrapper: css`
     width: 100%;

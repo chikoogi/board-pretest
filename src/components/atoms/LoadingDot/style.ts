@@ -37,11 +37,11 @@ export default {
       }
     }
 
-    .bouncing-loader > div:nth-child(2) {
+    .bouncing-loader > div:nth-of-type(2) {
       animation-delay: 0.2s;
     }
 
-    .bouncing-loader > div:nth-child(3) {
+    .bouncing-loader > div:nth-of-type(3) {
       animation-delay: 0.4s;
     }
   `,

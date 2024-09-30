@@ -1,7 +1,6 @@
 import styled from "./style.ts";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Close } from "@mui/icons-material";
 import FocusTrap from "@components/atoms/FocusTrap";
 
 interface ModalProps {
@@ -42,16 +41,6 @@ const Modal = ({ isOpen, children, onClose }: ModalProps) => {
     </FocusTrap>,
     document.getElementById("modal-root") as HTMLElement
   );
-  /*  return (
-    <FocusTrap>
-      <div css={styled.wrapper}>
-        <div css={styled.backWrapper} />
-        <div css={styled.subWrapper}>
-          <div css={styled.childrenWrapper}>{children}</div>
-        </div>
-      </div>
-    </FocusTrap>
-  );*/
 };
 
 export default Modal;

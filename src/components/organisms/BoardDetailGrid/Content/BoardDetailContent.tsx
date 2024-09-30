@@ -7,6 +7,7 @@ import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { useModal } from "@src/provider/ModalProvider.tsx";
 import Confirm from "@components/atoms/Confirm";
 import Alert from "@components/atoms/Alert";
+import { useEffect } from "react";
 
 const BoardDetailContent = ({ data, boardId, boardType }: any) => {
   const navigate = useNavigate();
@@ -14,6 +15,12 @@ const BoardDetailContent = ({ data, boardId, boardType }: any) => {
 
   const { mutate } = useBoardQuery();
   const deleteIssues = mutate.deleteIssues();
+
+  useEffect(() => {
+    if (data) {
+      document.title = data.title;
+    }
+  }, [data]);
 
   if (!data) return;
   return (
