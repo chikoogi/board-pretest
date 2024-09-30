@@ -1,11 +1,11 @@
 import { css } from "@emotion/react";
 
 export default {
-  wrapper: css`
+  wrapper: (height: string) => css`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: ${height};
 
     @keyframes bouncing-loader {
       to {

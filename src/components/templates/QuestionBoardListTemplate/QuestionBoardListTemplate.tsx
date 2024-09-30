@@ -11,6 +11,8 @@ const QuestionBoardListTemplate = () => {
     setFilters((prev) => ({ ...prev, ...newFilters })); // 필터 값 업데이트
   };
 
+  const handleResetSearch = () => setFilters(DEFAULT_FILTERS);
+
   const handleChangePage = (page: number) => {
     setFilters((prev) => ({
       ...prev,
@@ -26,8 +28,8 @@ const QuestionBoardListTemplate = () => {
         isLoading={isLoading}
         data={data}
         filters={filters}
-        boardType={QUESTION_BOARD}
         onSearch={handleSearch}
+        onResetSearch={handleResetSearch}
         onChangePage={handleChangePage}
       />
     </div>

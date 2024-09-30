@@ -83,7 +83,7 @@ export function getMMDDFormat(date: Date, option?: string, isTime?: boolean) {
   }
 }
 
-export function isSameDay(inputDateStr) {
+export function isSameDay(inputDateStr: Date) {
   // 입력받은 날짜 문자열을 Date 객체로 변환
   const inputDate = new Date(inputDateStr);
 

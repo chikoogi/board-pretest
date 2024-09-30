@@ -30,7 +30,6 @@ const FreeBoardListTemplate = () => {
         isLoading={isLoading}
         data={data}
         filters={filters}
-        boardType={FREE_BOARD}
         onSearch={handleSearch}
         onResetSearch={handleResetSearch}
         onChangePage={handleChangePage}

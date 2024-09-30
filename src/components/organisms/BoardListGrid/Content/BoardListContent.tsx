@@ -47,7 +47,7 @@ const BoardListContent = ({
       <div css={styled.searchContainer}>
         <SearchForBoard onSearch={onSearch} filters={filters} onResetSearch={onResetSearch} />
       </div>
-      {isLoading && <LoadingDot />}
+      {isLoading && <LoadingDot height={"50%"} />}
       {!isLoading && (
         <>
           <div css={styled.tableContainer}>
