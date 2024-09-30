@@ -1,16 +1,3 @@
-const palette = {
-  grey900: "#F9F9FD",
-  grey800: "#D9DAE5",
-  grey700: "#C7C8D3",
-  grey600: "#B5B5BD",
-  grey500: "#9897A1",
-  grey400: "#84838D",
-  grey300: "#42424A",
-  grey200: "#2C2C34",
-  grey100: "#202027",
-  grey50: "#121214",
-};
-
 export const darkTheme = {
   palette: {
     /*primary*/
