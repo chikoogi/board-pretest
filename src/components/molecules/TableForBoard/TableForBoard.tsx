@@ -22,7 +22,7 @@ const Row = ({ rowData }: any) => {
   );
 };
 
-const TableForBoard = ({ rows, totalRows, onChangePage }: { rows: any[]; totalRows: number }) => {
+const TableForBoard = ({ rows }: { rows: any[] }) => {
   return (
     <>
       <div css={styled.wrapper}>

@@ -52,7 +52,8 @@ const SearchForBoard = ({ boardType, onSearch, filters }: any) => {
               labelId="demo-select-small-label"
               id="demo-select-small"
               value={filterType}
-              label="Type"
+              label={"Type"}
+              size={"small"}
               onChange={handleChange}
             >
               {SEARCH_TYPE_LIST.map((item) => (
@@ -66,6 +67,7 @@ const SearchForBoard = ({ boardType, onSearch, filters }: any) => {
             <TextField
               placeholder={"검색"}
               value={searchStr}
+              size={"small"}
               onChange={(e) => setSearchStr(e.target.value)}
             />
           </div>
@@ -75,7 +77,9 @@ const SearchForBoard = ({ boardType, onSearch, filters }: any) => {
           {searchStr !== "" && <Button onClick={() => setSearchStr("")}>검색 취소</Button>}
         </div>
         <div css={styled.rightContainer}>
-          <Button onClick={() => navigate(`../write`)}>글쓰기</Button>
+          <Button variant="outlined" onClick={() => navigate(`../write`)}>
+            글쓰기
+          </Button>
         </div>
       </div>
     </>

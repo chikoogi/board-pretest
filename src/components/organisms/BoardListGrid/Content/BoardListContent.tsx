@@ -18,20 +18,23 @@ const BoardListContent = ({ data, boardType, onSearch, onChangePage, filters }: 
 
   return (
     <div css={styled.wrapper}>
-      <div>
+      <div css={styled.searchContainer}>
         <SearchForBoard boardType={boardType} onSearch={onSearch} filters={filters} />
-        <TableForBoard rows={rows} totalRows={totalRows} onChangePage={onChangePage} />
-        {rows.length !== 0 && (
-          <div css={styled.paginationContainer}>
-            <Pagination
-              totalItems={totalRows}
-              itemsPerPage={PER_PAGE}
-              onPageChange={onChangePage}
-              currentPage={filters.page}
-            />
-          </div>
-        )}
       </div>
+      <div css={styled.tableContainer}>
+        <TableForBoard rows={rows} />
+      </div>
+
+      {rows.length !== 0 && (
+        <div css={styled.paginationContainer}>
+          <Pagination
+            totalItems={totalRows}
+            itemsPerPage={PER_PAGE}
+            onPageChange={onChangePage}
+            currentPage={filters.page}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -16,9 +16,10 @@ export default {
     width: 100%;
     height: ${BOARD_HEIGHT}px;
     display: grid;
-    grid-template-columns: repeat(2, minmax(auto, 50%));
+    grid-template-columns: repeat(2, minmax(40%, 40%));
     grid-template-rows: 1fr;
-    column-gap: 10px;
+    justify-content: center;
+    column-gap: 50px;
   `,
   boardItem: css`
     width: 100%;

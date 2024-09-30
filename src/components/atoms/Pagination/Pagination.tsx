@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { ChevronLeft, ChevronRight, FirstPage, LastPage } from "@mui/icons-material";
+import { Button, IconButton } from "@mui/material";
+import styled from "./style.ts";
 
 interface PaginationProps {
   totalItems: number; // 전체 아이템 수
@@ -40,32 +43,34 @@ const Pagination = ({
   };
 
   return (
-    <div className="pagination">
-      <button onClick={() => onPageChange(1)} disabled={currentPage === 1}>
-        {"<<"}
-      </button>
+    <div className="pagination" css={styled.wrapper}>
+      <IconButton onClick={() => onPageChange(1)} disabled={currentPage === 1}>
+        <FirstPage />
+      </IconButton>
 
-      <button onClick={handlePrevSet} disabled={currentPage <= maxPageNumbers}>
-        {"<"}
-      </button>
+      <IconButton onClick={handlePrevSet} disabled={currentPage <= maxPageNumbers}>
+        <ChevronLeft />
+      </IconButton>
+      <div css={styled.pageContainer}>
+        {getPageNumbers().map((page) => (
+          <Button
+            key={page}
+            onClick={() => onPageChange(page)}
+            className={page === currentPage ? "active" : ""}
+            css={styled.btnWrapper(currentPage === page)}
+          >
+            {page}
+          </Button>
+        ))}
+      </div>
 
-      {getPageNumbers().map((page) => (
-        <button
-          key={page}
-          onClick={() => onPageChange(page)}
-          className={page === currentPage ? "active" : ""}
-        >
-          {page}
-        </button>
-      ))}
+      <IconButton onClick={handleNextSet} disabled={currentPage > totalPages - maxPageNumbers}>
+        <ChevronRight />
+      </IconButton>
 
-      <button onClick={handleNextSet} disabled={currentPage > totalPages - maxPageNumbers}>
-        {">"}
-      </button>
-
-      <button onClick={() => onPageChange(totalPages)} disabled={currentPage === totalPages}>
-        {">>"}
-      </button>
+      <IconButton onClick={() => onPageChange(totalPages)} disabled={currentPage === totalPages}>
+        <LastPage />
+      </IconButton>
     </div>
   );
 };
