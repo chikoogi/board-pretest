@@ -3,6 +3,7 @@ import BoardDetailContent from "@components/organisms/BoardDetailGrid/Content";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { useParams } from "react-router-dom";
 import { FREE_BOARD } from "@src/variables/common-variable.ts";
+import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
 
 const FreeBoardDetailTemplate = () => {
   const { id } = useParams();
@@ -12,7 +13,7 @@ const FreeBoardDetailTemplate = () => {
   const { data, isLoading } = query.getIssuesDetailFromFreeBoard(id);
 
   if (isLoading) {
-    return <>isLoading...</>;
+    return <LoadingDot />;
   }
   return (
     <div css={styled.wrapper}>

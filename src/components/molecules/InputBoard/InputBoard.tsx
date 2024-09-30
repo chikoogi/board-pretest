@@ -2,13 +2,12 @@ import styled from "./style.ts";
 import { Button, TextField } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import TextAreaStyledA from "@components/atoms/TextAreaStyledA/TextAreaStyledA.tsx";
-import { useNavigate, useParams } from "react-router-dom";
-import { useBoardQuery } from "@src/common/queries/queries.ts";
-import { FREE_BOARD } from "@src/variables/common-variable.ts";
 
 const InputBoard = ({ item, handleApply, handleDirty }: any) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [isTitleValid, setIsTitleValid] = useState(false);
+  const [isDesValid, setIsDesValid] = useState(false);
 
   useEffect(() => {
     if (item) {
@@ -20,30 +19,52 @@ const InputBoard = ({ item, handleApply, handleDirty }: any) => {
   return (
     <div css={styled.wrapper}>
       <div css={styled.titleContainer}>
+        {/*<div css={styled.label}>제목</div>*/}
         <TextField
-          placeholder={"제목"}
+          // label={"제목"}
+          label={"제목"}
           value={title}
           onChange={(e) => {
+            setIsTitleValid(false);
             setTitle(e.target.value);
             handleDirty(true);
           }}
+          helperText={isTitleValid ? "제목을 입력해주세요." : ""}
           fullWidth
+          focused={isTitleValid}
           autoFocus
         />
       </div>
       <div css={styled.descriptionContainer}>
-        <TextAreaStyledA
-          placeholder={"내용"}
+        {/*<div css={styled.label}>내용</div>*/}
+        <TextField
+          label={"내용"}
           value={description}
           onChange={(e) => {
+            setIsDesValid(false);
             setDescription(e.target.value);
             handleDirty(true);
           }}
+          fullWidth={true}
+          rows={15}
+          helperText={isDesValid ? "내용을 입력해주세요." : ""}
+          multiline={true}
+          focused={isDesValid}
         />
       </div>
       <div css={styled.actionContainer}>
         <Button
+          variant={"contained"}
           onClick={() => {
+            if (title === "" || description === "") {
+              if (title === "") {
+                setIsTitleValid(true);
+              }
+              if (description === "") {
+                setIsDesValid(true);
+              }
+              return;
+            }
             handleDirty(false);
             const dataSet = {
               title: title,

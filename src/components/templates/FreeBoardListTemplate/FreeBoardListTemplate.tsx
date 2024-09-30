@@ -4,6 +4,7 @@ import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { FREE_BOARD, QUESTION_BOARD } from "@src/variables/common-variable.ts";
 import { useState } from "react";
 import styled from "@components/templates/FreeBoardDetailTemplate/style.ts";
+import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
 
 const FreeBoardListTemplate = () => {
   const { query } = useBoardQuery();
@@ -22,12 +23,10 @@ const FreeBoardListTemplate = () => {
 
   const { data, isLoading } = query.getIssuesFromFreeBoard(filters);
 
-  if (isLoading) {
-    return <>isLoading...</>;
-  }
   return (
     <div css={styled.wrapper}>
       <BoardListContent
+        isLoading={isLoading}
         data={data}
         filters={filters}
         boardType={FREE_BOARD}

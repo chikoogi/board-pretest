@@ -3,6 +3,7 @@ import { QUESTION_BOARD } from "@src/variables/common-variable.ts";
 import { useParams } from "react-router-dom";
 import styled from "@components/templates/FreeBoardDetailTemplate/style.ts";
 import BoardDetailContent from "@components/organisms/BoardDetailGrid/Content";
+import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
 
 const QuestionBoardDetailTemplate = () => {
   const { id } = useParams();
@@ -12,7 +13,7 @@ const QuestionBoardDetailTemplate = () => {
   const { data, isLoading } = query.getIssuesDetailFromQuestionBoard(id);
 
   if (isLoading) {
-    return <>isLoading...</>;
+    return <LoadingDot />;
   }
   return (
     <div css={styled.wrapper}>

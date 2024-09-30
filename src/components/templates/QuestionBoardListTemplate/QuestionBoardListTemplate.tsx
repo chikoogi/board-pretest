@@ -6,6 +6,7 @@ import styled from "@components/templates/FreeBoardDetailTemplate/style.ts";
 import BoardDetailContent from "@components/organisms/BoardDetailGrid/Content";
 import BoardEditContent from "@components/organisms/BoardEditGrid/Content";
 import { useState } from "react";
+import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
 
 const QuestionBoardListTemplate = () => {
   const { query } = useBoardQuery();
@@ -23,14 +24,10 @@ const QuestionBoardListTemplate = () => {
 
   const { data, isLoading } = query.getIssuesFromQuestionBoard(filters);
 
-  console.log(data);
-
-  if (isLoading) {
-    return <>isLoading...</>;
-  }
   return (
     <div css={styled.wrapper}>
       <BoardListContent
+        isLoading={isLoading}
         data={data}
         filters={filters}
         boardType={QUESTION_BOARD}

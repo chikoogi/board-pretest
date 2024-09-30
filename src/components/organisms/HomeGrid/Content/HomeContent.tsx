@@ -4,6 +4,7 @@ import { FREE_BOARD, QUESTION_BOARD } from "@src/variables/common-variable.ts";
 import BoardPreview from "@components/molecules/BoardPreview/BoardPreview.tsx";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { fakerKO as faker } from "@faker-js/faker";
+import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
 
 export const MOCK_IMAGE_LIST = Array.from({ length: 4 }, (_, idx) => faker.image.urlPicsumPhotos());
 
@@ -19,13 +20,17 @@ const HomeContent = () => {
         <Carousel images={MOCK_IMAGE_LIST} />
       </div>
       <div css={styled.boardWrapper}>
-        {isLoading && <>isLoading...</>}
-        <div css={styled.boardItem}>
-          <BoardPreview data={data.questionBoard} boardType={QUESTION_BOARD} />
-        </div>
-        <div css={styled.boardItem}>
-          <BoardPreview data={data.freeBoard} boardType={FREE_BOARD} />
-        </div>
+        {isLoading && <LoadingDot />}
+        {!isLoading && (
+          <>
+            <div css={styled.boardItem}>
+              <BoardPreview data={data.questionBoard} boardType={QUESTION_BOARD} />
+            </div>
+            <div css={styled.boardItem}>
+              <BoardPreview data={data.freeBoard} boardType={FREE_BOARD} />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

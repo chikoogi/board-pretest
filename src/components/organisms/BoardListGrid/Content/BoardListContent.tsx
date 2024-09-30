@@ -4,8 +4,9 @@ import TableForBoard from "@components/molecules/TableForBoard";
 import { useEffect, useState } from "react";
 import Pagination from "@components/atoms/Pagination/Pagination.tsx";
 import { PER_PAGE } from "@src/common/queries/queries.ts";
+import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
 
-const BoardListContent = ({ data, boardType, onSearch, onChangePage, filters }: any) => {
+const BoardListContent = ({ data, boardType, onSearch, onChangePage, filters, isLoading }: any) => {
   const [totalRows, setTotalRows] = useState<number>(0);
   const [rows, setRows] = useState<any[]>([]);
 
@@ -21,19 +22,23 @@ const BoardListContent = ({ data, boardType, onSearch, onChangePage, filters }: 
       <div css={styled.searchContainer}>
         <SearchForBoard boardType={boardType} onSearch={onSearch} filters={filters} />
       </div>
-      <div css={styled.tableContainer}>
-        <TableForBoard rows={rows} />
-      </div>
-
-      {rows.length !== 0 && (
-        <div css={styled.paginationContainer}>
-          <Pagination
-            totalItems={totalRows}
-            itemsPerPage={PER_PAGE}
-            onPageChange={onChangePage}
-            currentPage={filters.page}
-          />
-        </div>
+      {isLoading && <LoadingDot />}
+      {!isLoading && (
+        <>
+          <div css={styled.tableContainer}>
+            <TableForBoard rows={rows} />
+          </div>
+          {rows.length !== 0 && (
+            <div css={styled.paginationContainer}>
+              <Pagination
+                totalItems={totalRows}
+                itemsPerPage={PER_PAGE}
+                onPageChange={onChangePage}
+                currentPage={filters.page}
+              />
+            </div>
+          )}
+        </>
       )}
     </div>
   );
