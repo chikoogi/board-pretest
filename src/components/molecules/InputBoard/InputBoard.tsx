@@ -32,6 +32,7 @@ const InputBoard = ({ item, handleApply, handleDirty }: any) => {
           helperText={isTitleValid ? "제목을 입력해주세요." : ""}
           fullWidth
           focused={isTitleValid}
+          error={isTitleValid}
           autoFocus
         />
       </div>
@@ -49,6 +50,7 @@ const InputBoard = ({ item, handleApply, handleDirty }: any) => {
           rows={15}
           helperText={isDesValid ? "내용을 입력해주세요." : ""}
           multiline={true}
+          error={isTitleValid}
           focused={isDesValid}
         />
       </div>
