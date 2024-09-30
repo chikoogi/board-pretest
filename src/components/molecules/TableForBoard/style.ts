@@ -19,24 +19,33 @@ export default {
           text-align: center;
         }
         th:nth-of-type(2) {
-          padding-left: 20px;
+          //padding-left: 20px;
+          text-align: center;
         }
         th:nth-of-type(3) {
-          width: 200px;
-          padding-left: 20px;
+          width: 150px;
+          text-align: center;
+          //padding-left: 20px;
         }
         th:nth-of-type(4) {
           width: 300px;
-          padding-left: 20px;
+          text-align: center;
+
+          //padding-left: 20px;
         }
       }
     }
   `,
   trWrapper: css`
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+    }
     td {
-      height: 44px;
+      height: 50px;
       border-bottom: 1px solid #dadce0;
-      padding-left: 20px;
+      //padding-left: 20px;
+      text-align: left;
     }
     td:nth-of-type(1) {
       display: flex;
@@ -50,6 +59,10 @@ export default {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+      text-align: left;
+    }
+    td:nth-of-type(4) {
+      text-align: center;
     }
   `,
   tbodyWrapper: css``,

@@ -1,14 +1,9 @@
 import styled from "./style.ts";
-import Pagination from "@components/atoms/Pagination/Pagination.tsx";
-import { useState } from "react";
-import { faker } from "@faker-js/faker";
 import { useNavigate, useParams } from "react-router-dom";
 import { getYYYYMMDDFormat } from "@src/tools/common-tool.ts";
 import Profile from "@components/molecules/Profile";
-import { PER_PAGE } from "@src/common/queries/queries.ts";
 
 const Row = ({ rowData }: any) => {
-  const { boardType } = useParams();
   const navigate = useNavigate();
   return (
     <tr css={styled.trWrapper} onClick={() => navigate(`../detail/${rowData.number}`)}>

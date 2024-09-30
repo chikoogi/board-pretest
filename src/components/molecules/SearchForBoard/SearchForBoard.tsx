@@ -52,7 +52,6 @@ const SearchForBoard = ({ boardType, onSearch, filters }: any) => {
               labelId="demo-select-small-label"
               id="demo-select-small"
               value={filterType}
-              label={"Type"}
               size={"small"}
               onChange={handleChange}
             >
@@ -69,15 +68,22 @@ const SearchForBoard = ({ boardType, onSearch, filters }: any) => {
               value={searchStr}
               size={"small"}
               onChange={(e) => setSearchStr(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSearch();
+              }}
             />
           </div>
           <Button variant="outlined" onClick={handleSearch}>
             검색
           </Button>
-          {searchStr !== "" && <Button onClick={() => setSearchStr("")}>검색 취소</Button>}
+          {searchStr !== "" && (
+            <Button color={"info"} onClick={() => setSearchStr("")}>
+              검색 취소
+            </Button>
+          )}
         </div>
         <div css={styled.rightContainer}>
-          <Button variant="outlined" onClick={() => navigate(`../write`)}>
+          <Button variant="contained" onClick={() => navigate(`../write`)}>
             글쓰기
           </Button>
         </div>
