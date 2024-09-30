@@ -59,8 +59,11 @@ const BoardDetailContent = ({ data, boardId, boardType }: any) => {
               showModal(Confirm, {
                 message: "삭제하시겠습니까?",
                 onConfirm: () => {
-                  deleteIssues.mutate(data.node_id);
-                  navigate("../list");
+                  deleteIssues.mutate(data.node_id, {
+                    onSuccess: (res) => {
+                      navigate("../list");
+                    },
+                  });
                 },
                 onCancel: () => closeModal(),
               });
