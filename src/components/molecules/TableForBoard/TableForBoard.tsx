@@ -2,22 +2,24 @@ import styled from "./style.ts";
 import { useNavigate, useParams } from "react-router-dom";
 import { getYYYYMMDDFormat } from "@src/tools/common-tool.ts";
 import Profile from "@components/molecules/Profile";
+import { useBoardQuery } from "@src/common/queries/queries.ts";
+import { BoardItemProps } from "@src/interfaces/common-interface.ts";
 
-const Row = ({ rowData }: any) => {
+const Row = ({ rowData }: { rowData: BoardItemProps }) => {
   const navigate = useNavigate();
   return (
-    <tr css={styled.trWrapper} onClick={() => navigate(`../detail/${rowData.number}`)}>
-      <td>{rowData.number}</td>
+    <tr css={styled.trWrapper} onClick={() => navigate(`../detail/${rowData.boardNum}`)}>
+      <td>{rowData.boardNum}</td>
       <td>{rowData.title}</td>
       <td>
-        <Profile src={rowData.user.avatar_url} name={rowData.user.login} />
+        <Profile src={rowData.userImageUrl} name={rowData.userName} />
       </td>
-      <td>{getYYYYMMDDFormat(new Date(rowData.created_at), "hyphen", true)}</td>
+      <td>{getYYYYMMDDFormat(new Date(rowData.createdAt), "hyphen", true)}</td>
     </tr>
   );
 };
 
-const TableForBoard = ({ rows }: { rows: any[] }) => {
+const TableForBoard = ({ rows }: { rows: BoardItemProps[] }) => {
   return (
     <>
       <div css={styled.wrapper}>
@@ -47,7 +49,7 @@ const TableForBoard = ({ rows }: { rows: any[] }) => {
                   </td>
                 </tr>
               )}
-              {rows.map((r: any) => (
+              {rows.map((r: BoardItemProps) => (
                 <Row key={r.id} rowData={r} />
               ))}
             </tbody>

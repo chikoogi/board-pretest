@@ -1,5 +1,5 @@
 import styled from "./style.ts";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import FocusTrap from "@components/atoms/FocusTrap";
 

@@ -1,11 +1,15 @@
 import styled from "./style.ts";
 import { Button, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useModal } from "@src/provider/ModalProvider.tsx";
 import Alert from "@components/atoms/Alert";
+import { BoardFiltersProps } from "@src/interfaces/common-interface.ts";
 
-const SEARCH_TYPE_LIST = [
+const SEARCH_TYPE_LIST: {
+  label: string;
+  value: string;
+}[] = [
   {
     label: "제목",
     value: "title",
@@ -16,7 +20,13 @@ const SEARCH_TYPE_LIST = [
   },
 ];
 
-const SearchForBoard = ({ boardType, onSearch, filters }: any) => {
+const SearchForBoard = ({
+  onSearch,
+  filters,
+}: {
+  onSearch: (newFilters: Pick<BoardFiltersProps, "filterType" | "searchStr">) => void;
+  filters: BoardFiltersProps;
+}) => {
   const navigate = useNavigate();
   const [filterType, setFilterType] = useState<string>("title");
   const [searchStr, setSearchStr] = useState<string>("");

@@ -14,7 +14,7 @@ const QuestionBoardEditTemplate = () => {
   return (
     <div css={styled.wrapper}>
       <div css={styled.contentContainer}>
-        <BoardEditContent boardType={QUESTION_BOARD} data={data} />
+        <BoardEditContent boardType={QUESTION_BOARD} data={data} enableDirty={true} />
       </div>
     </div>
   );

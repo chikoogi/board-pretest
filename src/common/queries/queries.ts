@@ -7,6 +7,7 @@ import {
   REPO_OWNER,
 } from "@src/common/axios/AxiosInstance.ts";
 import { isAxiosError } from "axios";
+import { updateBoardItemDTO } from "@src/interfaces/common-interface.ts";
 
 export const PER_PAGE = 10;
 
@@ -139,7 +140,7 @@ export const useBoardQuery = () => {
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
-      mutationFn: async (data: any) => {
+      mutationFn: async (data: updateBoardItemDTO) => {
         const res = await axiosInstanceFree.post(`/issues`, data);
 
         if (isAxiosError(res)) {
@@ -149,7 +150,7 @@ export const useBoardQuery = () => {
         return res.data;
       },
       onSuccess: async () => {
-        // await queryClient.invalidateQueries({ queryKey: ["board"] });
+        await queryClient.invalidateQueries({ queryKey: ["board", "freeBoard"] });
       },
       onSettled: async (data) => {
         // return queryClient.invalidateQueries({ queryKey });
@@ -163,7 +164,7 @@ export const useBoardQuery = () => {
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
-      mutationFn: async ({ id, data }: any) => {
+      mutationFn: async ({ id, data }: { id: string; data: updateBoardItemDTO }) => {
         const res = await axiosInstanceFree.patch(`/issues/${id}`, data);
 
         if (isAxiosError(res)) {
@@ -199,7 +200,6 @@ export const useBoardQuery = () => {
         return res.data;
       },
       onSuccess: async (res) => {
-        await queryClient.cancelQueries({ queryKey: ["board", "freeBoard"] });
         await queryClient.invalidateQueries({ queryKey: ["board", "freeBoard"] });
       },
       onSettled: async (data) => {
@@ -214,7 +214,7 @@ export const useBoardQuery = () => {
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
-      mutationFn: async (data: any) => {
+      mutationFn: async (data: updateBoardItemDTO) => {
         const res = await axiosInstanceQuestion.post(`/issues`, data);
 
         if (isAxiosError(res)) {
@@ -238,7 +238,7 @@ export const useBoardQuery = () => {
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
-      mutationFn: async ({ id, data }: any) => {
+      mutationFn: async ({ id, data }: { id: string; data: updateBoardItemDTO }) => {
         const res = await axiosInstanceQuestion.patch(`/issues/${id}`, data);
 
         if (isAxiosError(res)) {

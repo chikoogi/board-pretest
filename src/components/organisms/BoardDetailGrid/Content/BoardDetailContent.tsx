@@ -2,32 +2,43 @@ import styled from "./style.ts";
 import ReadBoard from "@components/molecules/ReadBoard";
 import { FREE_BOARD, QUESTION_BOARD } from "@src/variables/common-variable.ts";
 import { Button } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { useModal } from "@src/provider/ModalProvider.tsx";
 import Confirm from "@components/atoms/Confirm";
-import Alert from "@components/atoms/Alert";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { BoardItemProps, BoardType } from "@src/interfaces/common-interface.ts";
 
-const BoardDetailContent = ({ data, boardId, boardType }: any) => {
+const BoardDetailContent = ({ data, boardType }: { data: any; boardType: BoardType }) => {
+  const [item, setItem] = useState<BoardItemProps | undefined>(undefined);
+
   const navigate = useNavigate();
   const { showModal, closeModal } = useModal();
 
   const { mutate } = useBoardQuery();
 
   /* 이슈 삭제 status closed 로 대체
-    const deleteIssues = mutate.deleteIssues();
+   const deleteIssues =
+    boardType === FREE_BOARD
+      ? mutate.deleteIssuesFromFreeBoard()
+      : mutate.deleteIssuesFromQuestionBoard();
   */
 
   const deleteIssues = mutate.deleteIssues();
-  /*  const deleteIssues =
-    boardType === FREE_BOARD
-      ? mutate.deleteIssuesFromFreeBoard()
-      : mutate.deleteIssuesFromQuestionBoard();*/
 
   useEffect(() => {
     if (data) {
       document.title = data.title;
+      setItem({
+        id: data.id,
+        nodeId: data.node_id,
+        boardNum: data.number,
+        createdAt: data.created_at,
+        title: data.title,
+        description: data.body,
+        userImageUrl: data.user.avatar_url,
+        userName: data.user.login,
+      });
     }
   }, [data]);
 
@@ -38,16 +49,15 @@ const BoardDetailContent = ({ data, boardId, boardType }: any) => {
         {boardType === QUESTION_BOARD && <div>질문 게시판</div>}
         {boardType === FREE_BOARD && <div>자유 게시판</div>}
       </div>
-      <div css={styled.boardContainer}>
-        <ReadBoard item={data} />
-      </div>
+      <div css={styled.boardContainer}>{item && <ReadBoard item={item} />}</div>
       <div css={styled.actionContainer}>
         <div css={styled.leftAction}>
           <Button
             variant="outlined"
             color={"info"}
             onClick={() => {
-              navigate(`../edit/${data.number}`);
+              if (!item) return;
+              navigate(`../edit/${item.boardNum}`);
             }}
           >
             수정
@@ -59,21 +69,16 @@ const BoardDetailContent = ({ data, boardId, boardType }: any) => {
               showModal(Confirm, {
                 message: "삭제하시겠습니까?",
                 onConfirm: () => {
-                  deleteIssues.mutate(data.node_id, {
-                    onSuccess: (res) => {
+                  if (!item) return;
+
+                  deleteIssues.mutate(item.nodeId, {
+                    onSuccess: () => {
                       navigate("../list");
                     },
                   });
                 },
                 onCancel: () => closeModal(),
               });
-              /*              deleteIssues.mutate(data.node_id, {
-                onSuccess: (res) => {
-                  console.log("comp res", res);
-                  // navigate("../list");
-                  // navigate(`/${boardType}/list`);
-                },
-              });*/
             }}
           >
             삭제

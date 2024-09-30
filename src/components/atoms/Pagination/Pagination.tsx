@@ -2,12 +2,13 @@ import { useState } from "react";
 import { ChevronLeft, ChevronRight, FirstPage, LastPage } from "@mui/icons-material";
 import { Button, IconButton } from "@mui/material";
 import styled from "./style.ts";
+import { BoardFiltersProps } from "@src/interfaces/common-interface.ts";
 
 interface PaginationProps {
   totalItems: number; // 전체 아이템 수
   itemsPerPage: number; // 한 페이지에 보여줄 아이템 수
   currentPage: number; // 현재 페이지
-  onPageChange: (page: number) => void; // 페이지 변경 시 호출할 함수
+  onPageChange: (page: BoardFiltersProps["page"]) => void; // 페이지 변경 시 호출할 함수
   maxPageNumbers?: number;
 }
 
@@ -23,7 +24,7 @@ const Pagination = ({
   const getPageNumbers = () => {
     const startPage = Math.floor((currentPage - 1) / maxPageNumbers) * maxPageNumbers + 1;
     const endPage = Math.min(totalPages, startPage + maxPageNumbers - 1);
-    const pages = [];
+    const pages: number[] = [];
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
     }

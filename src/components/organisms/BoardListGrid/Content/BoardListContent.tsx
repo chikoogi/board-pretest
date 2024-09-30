@@ -5,22 +5,45 @@ import { useEffect, useState } from "react";
 import Pagination from "@components/atoms/Pagination/Pagination.tsx";
 import { PER_PAGE } from "@src/common/queries/queries.ts";
 import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
+import { BoardFiltersProps, BoardItemProps } from "@src/interfaces/common-interface.ts";
 
-const BoardListContent = ({ data, boardType, onSearch, onChangePage, filters, isLoading }: any) => {
+const BoardListContent = ({
+  data,
+  onSearch,
+  onChangePage,
+  filters,
+  isLoading,
+}: {
+  data: any;
+  onSearch: (newFilters: Pick<BoardFiltersProps, "filterType" | "searchStr">) => void;
+  onChangePage: (page: BoardFiltersProps["page"]) => void;
+  filters: BoardFiltersProps;
+  isLoading: boolean;
+}) => {
   const [totalRows, setTotalRows] = useState<number>(0);
-  const [rows, setRows] = useState<any[]>([]);
+  const [rows, setRows] = useState<BoardItemProps[]>([]);
 
   useEffect(() => {
     if (data) {
       setTotalRows(data.total_count);
-      setRows(data.items);
+      const items: BoardItemProps[] = data.items.map((v: any) => ({
+        id: v.id,
+        nodeId: v.node_id,
+        boardNum: v.number,
+        createdAt: v.created_at,
+        title: v.title,
+        description: v.body,
+        userImageUrl: v.user.avatar_url,
+        userName: v.user.login,
+      }));
+      setRows(items);
     }
   }, [data]);
 
   return (
     <div css={styled.wrapper}>
       <div css={styled.searchContainer}>
-        <SearchForBoard boardType={boardType} onSearch={onSearch} filters={filters} />
+        <SearchForBoard onSearch={onSearch} filters={filters} />
       </div>
       {isLoading && <LoadingDot />}
       {!isLoading && (

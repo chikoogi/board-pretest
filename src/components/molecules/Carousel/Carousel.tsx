@@ -68,7 +68,7 @@ const Carousel = ({ images }: { images: string[] }) => {
       </div>
       <div css={styled.paginationWrapper}>
         <div css={styled.pagination}>
-          {images.map((_: any, i: number) => {
+          {images.map((_: string, i: number) => {
             const dotStyle = getDotStyle({ idx: i, curPage: currentIndex - 1 });
             return (
               <div key={i}>

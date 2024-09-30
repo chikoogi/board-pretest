@@ -7,29 +7,24 @@ import { useEffect, useState } from "react";
 import ReactRouterPrompt from "react-router-prompt";
 import Confirm from "@components/atoms/Confirm";
 import Modal from "@components/atoms/Modal";
+import { BoardType, updateBoardItemDTO } from "@src/interfaces/common-interface.ts";
+import { useBeforeUnload } from "@src/hooks/useBeforeUnload.ts";
 
-const BoardWriteContent = ({ boardType, enableDirty = true }: any) => {
+const BoardWriteContent = ({
+  boardType,
+  enableDirty = true,
+}: {
+  boardType: BoardType;
+  enableDirty?: boolean;
+}) => {
   const [isDirty, setIsDirty] = useState(false);
   const navigate = useNavigate();
+
+  useBeforeUnload(isDirty && enableDirty);
 
   const { mutate } = useBoardQuery();
   const addFreeMutate = mutate.addIssuesFromFreeBoard();
   const addQuestionMutate = mutate.addIssuesFromQuestionBoard();
-
-  useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (enableDirty && isDirty) {
-        event.preventDefault();
-        event.returnValue = "";
-      }
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
 
   return (
     <>
@@ -58,7 +53,7 @@ const BoardWriteContent = ({ boardType, enableDirty = true }: any) => {
         <div css={styled.contentContainer}>
           <InputBoard
             handleDirty={(d: boolean) => setIsDirty(d)}
-            handleApply={(dataSet: any) => {
+            handleApply={(dataSet: updateBoardItemDTO) => {
               if (boardType === FREE_BOARD) {
                 addFreeMutate.mutate(dataSet, {
                   onSuccess: async (res: any) => {

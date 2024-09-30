@@ -5,16 +5,21 @@ import { FREE_BOARD, QUESTION_BOARD } from "@src/variables/common-variable.ts";
 import { useState } from "react";
 import styled from "@components/templates/FreeBoardDetailTemplate/style.ts";
 import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
+import { BoardFiltersProps } from "@src/interfaces/common-interface.ts";
 
 const FreeBoardListTemplate = () => {
   const { query } = useBoardQuery();
-  const [filters, setFilters] = useState({ page: 1, filterType: "title", searchStr: "" });
+  const [filters, setFilters] = useState<BoardFiltersProps>({
+    page: 1,
+    filterType: "title",
+    searchStr: "",
+  });
 
-  const handleSearch = (newFilters: any) => {
+  const handleSearch = (newFilters: Pick<BoardFiltersProps, "filterType" | "searchStr">) => {
     setFilters((prev) => ({ ...prev, ...newFilters })); // 필터 값 업데이트
   };
 
-  const handleChangePage = (page: number) => {
+  const handleChangePage = (page: BoardFiltersProps["page"]) => {
     setFilters((prev) => ({
       ...prev,
       page: page,

@@ -7,34 +7,46 @@ import { useEffect, useState } from "react";
 import ReactRouterPrompt from "react-router-prompt";
 import Modal from "@components/atoms/Modal";
 import Confirm from "@components/atoms/Confirm";
+import { useBeforeUnload } from "@src/hooks/useBeforeUnload.ts";
+import { BoardItemProps, BoardType, updateBoardItemDTO } from "@src/interfaces/common-interface.ts";
 
-const BoardEditContent = ({ data, boardType }: any) => {
+const BoardEditContent = ({
+  data,
+  boardType,
+  enableDirty = true,
+}: {
+  data: any;
+  boardType: BoardType;
+  enableDirty?: boolean;
+}) => {
+  const [item, setItem] = useState<BoardItemProps | undefined>(undefined);
   const [isDirty, setIsDirty] = useState(false);
-
   const navigate = useNavigate();
 
+  useBeforeUnload(isDirty && enableDirty);
   const { mutate } = useBoardQuery();
   const updateFreeMutate = mutate.updateIssuesFromFreeBoard();
   const updateQuestionMutate = mutate.updateIssuesFromFreeBoard();
 
   useEffect(() => {
-    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      if (isDirty) {
-        event.preventDefault();
-        event.returnValue = "";
-      }
-    };
+    if (data) {
+      setItem({
+        id: data.id,
+        nodeId: data.node_id,
+        boardNum: data.number,
+        createdAt: data.created_at,
+        title: data.title,
+        description: data.body,
+        userImageUrl: data.user.avatar_url,
+        userName: data.user.login,
+      });
+    }
+  }, [data]);
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, []);
-
+  if (!data) return;
   return (
     <>
-      <ReactRouterPrompt when={isDirty}>
+      <ReactRouterPrompt when={isDirty && enableDirty}>
         {({ isActive, onConfirm, onCancel }) => {
           return (
             <Modal isOpen={isActive} onClose={onCancel}>
@@ -57,13 +69,14 @@ const BoardEditContent = ({ data, boardType }: any) => {
       <div css={styled.wrapper}>
         <div css={styled.topContainer}>게시판</div>
         <div css={styled.contentContainer}>
-          <InputBoard
-            item={data}
+          <InputBoard<BoardItemProps>
+            item={item}
             handleDirty={(d) => setIsDirty(d)}
-            handleApply={(dataSet: any) => {
+            handleApply={(dataSet: updateBoardItemDTO) => {
+              if (!item) return;
               if (boardType === FREE_BOARD) {
                 updateFreeMutate.mutate(
-                  { id: data.number, data: dataSet },
+                  { id: item.boardNum, data: dataSet },
                   {
                     onSuccess: (res) => {
                       const boardId = res.number;
@@ -73,7 +86,7 @@ const BoardEditContent = ({ data, boardType }: any) => {
                 );
               } else if (boardType === QUESTION_BOARD) {
                 updateQuestionMutate.mutate(
-                  { id: data.number, data: dataSet },
+                  { id: item.boardNum, data: dataSet },
                   {
                     onSuccess: (res) => {
                       const boardId = res.number;

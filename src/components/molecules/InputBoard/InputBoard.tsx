@@ -1,9 +1,17 @@
 import styled from "./style.ts";
 import { Button, TextField } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
-import TextAreaStyledA from "@components/atoms/TextAreaStyledA/TextAreaStyledA.tsx";
+import { useEffect, useState } from "react";
+import { BoardItemProps, updateBoardItemDTO } from "@src/interfaces/common-interface.ts";
 
-const InputBoard = ({ item, handleApply, handleDirty }: any) => {
+const InputBoard = <T extends BoardItemProps>({
+  item,
+  handleApply,
+  handleDirty,
+}: {
+  item?: T;
+  handleDirty: (d: boolean) => void;
+  handleApply: (dataSet: updateBoardItemDTO) => void;
+}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [isTitleValid, setIsTitleValid] = useState(false);
@@ -12,7 +20,7 @@ const InputBoard = ({ item, handleApply, handleDirty }: any) => {
   useEffect(() => {
     if (item) {
       setTitle(item.title);
-      setDescription(item.body);
+      setDescription(item.description);
     }
   }, [item]);
 
@@ -65,7 +73,7 @@ const InputBoard = ({ item, handleApply, handleDirty }: any) => {
               return;
             }
             handleDirty(false);
-            const dataSet = {
+            const dataSet: updateBoardItemDTO = {
               title: title,
               body: description,
             };

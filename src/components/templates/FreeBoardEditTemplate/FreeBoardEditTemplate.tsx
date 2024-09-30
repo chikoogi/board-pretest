@@ -13,7 +13,7 @@ const FreeBoardEditTemplate = () => {
   return (
     <div css={styled.wrapper}>
       <div css={styled.contentContainer}>
-        <BoardEditContent boardType={FREE_BOARD} data={data} />
+        <BoardEditContent boardType={FREE_BOARD} data={data} enableDirty={true} />
       </div>
     </div>
   );
