@@ -1,16 +1,12 @@
 import BoardListContent from "@components/organisms/BoardListGrid/Content";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
-import { FREE_BOARD, QUESTION_BOARD } from "@src/variables/common-variable.ts";
-import { useParams } from "react-router-dom";
+import { DEFAULT_FILTERS, QUESTION_BOARD } from "@src/variables/common-variable.ts";
 import styled from "@components/templates/FreeBoardDetailTemplate/style.ts";
-import BoardDetailContent from "@components/organisms/BoardDetailGrid/Content";
-import BoardEditContent from "@components/organisms/BoardEditGrid/Content";
 import { useState } from "react";
-import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
 
 const QuestionBoardListTemplate = () => {
   const { query } = useBoardQuery();
-  const [filters, setFilters] = useState({ page: 1, filterType: "title", searchStr: "" });
+  const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const handleSearch = (newFilters: any) => {
     setFilters((prev) => ({ ...prev, ...newFilters })); // 필터 값 업데이트
   };

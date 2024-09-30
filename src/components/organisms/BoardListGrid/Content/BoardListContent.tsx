@@ -10,12 +10,14 @@ import { BoardFiltersProps, BoardItemProps } from "@src/interfaces/common-interf
 const BoardListContent = ({
   data,
   onSearch,
+  onResetSearch,
   onChangePage,
   filters,
   isLoading,
 }: {
   data: any;
   onSearch: (newFilters: Pick<BoardFiltersProps, "filterType" | "searchStr">) => void;
+  onResetSearch: () => void;
   onChangePage: (page: BoardFiltersProps["page"]) => void;
   filters: BoardFiltersProps;
   isLoading: boolean;
@@ -43,7 +45,7 @@ const BoardListContent = ({
   return (
     <div css={styled.wrapper}>
       <div css={styled.searchContainer}>
-        <SearchForBoard onSearch={onSearch} filters={filters} />
+        <SearchForBoard onSearch={onSearch} filters={filters} onResetSearch={onResetSearch} />
       </div>
       {isLoading && <LoadingDot />}
       {!isLoading && (

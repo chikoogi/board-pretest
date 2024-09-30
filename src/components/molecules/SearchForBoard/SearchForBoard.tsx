@@ -22,14 +22,17 @@ const SEARCH_TYPE_LIST: {
 
 const SearchForBoard = ({
   onSearch,
+  onResetSearch,
   filters,
 }: {
   onSearch: (newFilters: Pick<BoardFiltersProps, "filterType" | "searchStr">) => void;
+  onResetSearch: () => void;
   filters: BoardFiltersProps;
 }) => {
   const navigate = useNavigate();
   const [filterType, setFilterType] = useState<string>("title");
   const [searchStr, setSearchStr] = useState<string>("");
+  const [isSearch, setIsSearch] = useState<boolean>(false);
   const { showModal, closeModal } = useModal();
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -44,8 +47,14 @@ const SearchForBoard = ({
         onClose: closeModal,
       });
     } else {
+      setIsSearch(true);
       onSearch({ filterType, searchStr });
     }
+  };
+
+  const handleResetSearch = () => {
+    setIsSearch(false);
+    onResetSearch();
   };
 
   useEffect(() => {
@@ -86,8 +95,8 @@ const SearchForBoard = ({
           <Button variant="outlined" onClick={handleSearch}>
             검색
           </Button>
-          {searchStr !== "" && (
-            <Button color={"info"} onClick={() => setSearchStr("")}>
+          {isSearch && (
+            <Button color={"info"} onClick={handleResetSearch}>
               검색 취소
             </Button>
           )}

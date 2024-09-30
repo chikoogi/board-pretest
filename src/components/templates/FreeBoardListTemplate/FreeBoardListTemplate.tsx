@@ -1,23 +1,19 @@
 import BoardListContent from "@components/organisms/BoardListGrid/Content";
-import { useParams } from "react-router-dom";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
-import { FREE_BOARD, QUESTION_BOARD } from "@src/variables/common-variable.ts";
+import { DEFAULT_FILTERS, FREE_BOARD } from "@src/variables/common-variable.ts";
 import { useState } from "react";
 import styled from "@components/templates/FreeBoardDetailTemplate/style.ts";
-import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
 import { BoardFiltersProps } from "@src/interfaces/common-interface.ts";
 
 const FreeBoardListTemplate = () => {
   const { query } = useBoardQuery();
-  const [filters, setFilters] = useState<BoardFiltersProps>({
-    page: 1,
-    filterType: "title",
-    searchStr: "",
-  });
+  const [filters, setFilters] = useState<BoardFiltersProps>(DEFAULT_FILTERS);
 
   const handleSearch = (newFilters: Pick<BoardFiltersProps, "filterType" | "searchStr">) => {
-    setFilters((prev) => ({ ...prev, ...newFilters })); // 필터 값 업데이트
+    setFilters((prev) => ({ page: 1, ...newFilters })); // 필터 값 업데이트
   };
+
+  const handleResetSearch = () => setFilters(DEFAULT_FILTERS);
 
   const handleChangePage = (page: BoardFiltersProps["page"]) => {
     setFilters((prev) => ({
@@ -36,6 +32,7 @@ const FreeBoardListTemplate = () => {
         filters={filters}
         boardType={FREE_BOARD}
         onSearch={handleSearch}
+        onResetSearch={handleResetSearch}
         onChangePage={handleChangePage}
       />
     </div>
