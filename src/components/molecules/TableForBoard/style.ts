@@ -44,7 +44,7 @@ export default {
     td {
       height: 50px;
       border-bottom: 1px solid #dadce0;
-      //padding-left: 20px;
+      padding-left: 20px;
       text-align: left;
     }
     td:nth-of-type(1) {
@@ -63,7 +63,11 @@ export default {
     }
     td:nth-of-type(4) {
       text-align: center;
+      padding: 0;
     }
+  `,
+  emptyTr: css`
+    height: 200px;
   `,
   tbodyWrapper: css``,
   noData: css`

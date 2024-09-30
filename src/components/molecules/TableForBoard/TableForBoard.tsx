@@ -41,7 +41,7 @@ const TableForBoard = ({ rows }: { rows: any[] }) => {
             </thead>
             <tbody>
               {rows.length === 0 && (
-                <tr>
+                <tr css={styled.emptyTr}>
                   <td colSpan={4} css={styled.noData}>
                     등록된 게시글이 없습니다.
                   </td>

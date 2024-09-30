@@ -12,6 +12,7 @@ export default {
   boardContainer: css`
     width: 100%;
     min-height: 450px;
+    margin-bottom: 20px;
   `,
   actionContainer: css`
     display: flex;
