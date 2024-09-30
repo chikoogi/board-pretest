@@ -15,4 +15,13 @@ export default {
     gap: 10px;
   `,
   rightContainer: css``,
+  adornment: css`
+    right: 0;
+    position: absolute;
+  `,
+  textFieldWrapper: css`
+    .MuiInputBase-root {
+      padding-right: 30px;
+    }
+  `,
 };

@@ -1,10 +1,11 @@
 import styled from "./style.ts";
-import { Button, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
+import { Button, IconButton, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "@src/provider/ModalProvider.tsx";
 import Alert from "@components/atoms/Alert";
 import { BoardFiltersProps } from "@src/interfaces/common-interface.ts";
+import { Cancel } from "@mui/icons-material";
 
 const SEARCH_TYPE_LIST: {
   label: string;
@@ -90,6 +91,17 @@ const SearchForBoard = ({
               onKeyDown={(e) => {
                 if (e.key === "Enter") handleSearch();
               }}
+              InputProps={{
+                endAdornment:
+                  searchStr !== "" ? (
+                    <IconButton onClick={() => setSearchStr("")} css={styled.adornment}>
+                      <Cancel />
+                    </IconButton>
+                  ) : (
+                    <></>
+                  ),
+              }}
+              css={styled.textFieldWrapper}
             />
           </div>
           <Button variant="outlined" onClick={handleSearch}>
