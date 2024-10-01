@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import { createBrowserRouter, Navigate, RouteObject } from "react-router-dom";
 import DefaultTemplate from "@components/templates/DefaultTemplate";
-import LoadingPage from "@src/pages/LoadingPage";
+import NotFoundPage from "@src/pages/NotFoundPage/NotFoundPage.tsx";
 
 const TotalHomePage = lazy(() => import("@src/pages/TotalHomePage"));
 const FreeBoardListPage = lazy(() => import("@src/pages/FreeBoardListPage/FreeBoardListPage.tsx"));
@@ -56,6 +56,10 @@ const routeObjectList: RouteObject[] = [
           { path: "detail/:id", element: <QuestionBoardDetailPage /> }, //게시글 상세 페이지
           { path: "edit/:id", element: <QuestionBoardEditPage /> }, // 게시글 수정 페이지
         ],
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
       },
     ],
   },
