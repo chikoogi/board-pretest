@@ -61,6 +61,7 @@ const BoardDetailContent = ({
               showModal(Confirm, {
                 message: "삭제하시겠습니까?",
                 onConfirm: () => {
+                  closeModal();
                   deleteIssues.mutate(item.nodeId, {
                     onSuccess: () => {
                       navigate("../list");
