@@ -44,20 +44,22 @@ export const useBoardQuery = () => {
 
   const useGetIssuesFromFreeBoard = ({
     page,
+    per_page = PER_PAGE,
     filterType,
     searchStr,
   }: {
     page: number;
+    per_page?: number;
     filterType?: string;
     searchStr?: string;
   }) => {
     return useQuery({
-      queryKey: ["board", "freeBoard", page, filterType, searchStr],
+      queryKey: ["board", "freeBoard", page, per_page, filterType, searchStr],
       queryFn: async ({ queryKey }) => {
         const filter = searchStr ? `${searchStr}+in:${filterType}` : "";
 
         const res = await axiosInstance.get(
-          `/search/issues?q=repo:${REPO_OWNER}/freeboard+is:issue+is:open+${filter}&per_page=${PER_PAGE}&page=${page}`
+          `/search/issues?q=repo:${REPO_OWNER}/freeboard+is:issue+is:open+${filter}&per_page=${per_page}&page=${page}`
         );
 
         if (isAxiosError(res)) {
@@ -71,7 +73,7 @@ export const useBoardQuery = () => {
     });
   };
 
-  const useGetIssuesDetailFromFreeBoard = (id?: string) => {
+  const useGetIssuesDetailFromFreeBoard = (id?: string, enable: boolean = true) => {
     return useQuery({
       queryKey: ["board", "freeBoard", "detail", id],
       queryFn: async ({ queryKey }) => {
@@ -83,7 +85,7 @@ export const useBoardQuery = () => {
 
         return res.data;
       },
-      enabled: Boolean(id),
+      enabled: Boolean(id) && enable,
       refetchOnWindowFocus: false,
       retry: 2,
     });
@@ -91,20 +93,23 @@ export const useBoardQuery = () => {
 
   const useGetIssuesFromQuestionBoard = ({
     page,
+    per_page = PER_PAGE,
     filterType,
     searchStr,
   }: {
     page: number;
+    per_page?: number;
+
     filterType?: string;
     searchStr?: string;
   }) => {
     return useQuery({
-      queryKey: ["board", "questionBoard", page, filterType, searchStr],
+      queryKey: ["board", "questionBoard", page, per_page, filterType, searchStr],
       queryFn: async ({ queryKey }) => {
         const filter = searchStr ? `${searchStr}+in:${filterType}` : "";
 
         const res = await axiosInstance.get(
-          `/search/issues?q=repo:${REPO_OWNER}/questionboard+is:issue+is:open+${filter}&per_page=${PER_PAGE}&page=${page}`
+          `/search/issues?q=repo:${REPO_OWNER}/questionboard+is:issue+is:open+${filter}&per_page=${per_page}&page=${page}`
         );
 
         if (isAxiosError(res)) {
@@ -118,7 +123,7 @@ export const useBoardQuery = () => {
     });
   };
 
-  const useGetIssuesDetailFromQuestionBoard = (id?: string) => {
+  const useGetIssuesDetailFromQuestionBoard = (id?: string, enable: boolean = true) => {
     return useQuery({
       queryKey: ["board", "questionBoard", id],
       queryFn: async ({ queryKey }) => {
@@ -130,7 +135,7 @@ export const useBoardQuery = () => {
 
         return res.data;
       },
-      enabled: Boolean(id),
+      enabled: Boolean(id) && enable,
       refetchOnWindowFocus: false,
       retry: 2,
     });

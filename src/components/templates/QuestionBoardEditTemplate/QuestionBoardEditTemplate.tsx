@@ -1,14 +1,37 @@
-import BoardListContent from "@components/organisms/BoardListGrid/Content";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { QUESTION_BOARD } from "@src/variables/common-variable.ts";
 import { useParams } from "react-router-dom";
 import styled from "@components/templates/FreeBoardDetailTemplate/style.ts";
 import BoardEditContent from "@components/organisms/BoardEditGrid/Content";
 import { useBoard } from "@src/provider/BoardProvider.tsx";
+import { useEffect } from "react";
+import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
 
 const QuestionBoardEditTemplate = () => {
-  const { selectedBoard } = useBoard();
+  const { selectedBoard, handleSelect } = useBoard();
 
+  const { id } = useParams();
+  const { query } = useBoardQuery();
+  const { data, isLoading } = query.getIssuesDetailFromQuestionBoard(id, Boolean(!selectedBoard));
+
+  useEffect(() => {
+    if (data) {
+      handleSelect({
+        id: data.id,
+        nodeId: data.node_id,
+        boardNum: data.number,
+        createdAt: data.created_at,
+        title: data.title,
+        description: data.body,
+        userImageUrl: data.user.avatar_url,
+        userName: data.user.login,
+      });
+    }
+  }, [data]);
+
+  if (isLoading) {
+    return <LoadingDot />;
+  }
   if (!selectedBoard) return;
   return (
     <div css={styled.wrapper}>

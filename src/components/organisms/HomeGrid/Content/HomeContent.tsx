@@ -11,26 +11,29 @@ export const MOCK_IMAGE_LIST = [bg01, bg02, bg03, bg04];
 const HomeContent = () => {
   const { query } = useBoardQuery();
 
-  const { data, isLoading } = query.getIssuesFromBoard();
+  const freeBoard = query.getIssuesFromFreeBoard({ page: 1, per_page: 5 });
+  const questionBoard = query.getIssuesFromQuestionBoard({ page: 1, per_page: 5 });
 
-  if (!data) return;
   return (
     <div css={styled.wrapper}>
       <div css={styled.carouselWrapper}>
         <Carousel images={MOCK_IMAGE_LIST} />
       </div>
       <div css={styled.boardWrapper}>
-        {isLoading && <LoadingDot />}
-        {!isLoading && (
+        {
           <>
             <div css={styled.boardItem}>
-              <BoardPreview data={data.questionBoard} boardType={QUESTION_BOARD} />
+              {questionBoard.isLoading && <LoadingDot />}
+              {questionBoard.data && (
+                <BoardPreview data={questionBoard.data} boardType={QUESTION_BOARD} />
+              )}
             </div>
             <div css={styled.boardItem}>
-              <BoardPreview data={data.freeBoard} boardType={FREE_BOARD} />
+              {freeBoard.isLoading && <LoadingDot />}
+              {freeBoard.data && <BoardPreview data={freeBoard.data} boardType={FREE_BOARD} />}
             </div>
           </>
-        )}
+        }
       </div>
     </div>
   );
