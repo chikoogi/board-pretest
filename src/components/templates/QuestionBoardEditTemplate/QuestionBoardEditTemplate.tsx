@@ -6,13 +6,17 @@ import BoardEditContent from "@components/organisms/BoardEditGrid/Content";
 import { useBoard } from "@src/provider/BoardProvider.tsx";
 import { useEffect } from "react";
 import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
+import ErrorPage from "@src/pages/ErrorPage/ErrorPage.tsx";
 
 const QuestionBoardEditTemplate = () => {
   const { selectedBoard, handleSelect } = useBoard();
 
   const { id } = useParams();
   const { query } = useBoardQuery();
-  const { data, isLoading } = query.getIssuesDetailFromQuestionBoard(id, Boolean(!selectedBoard));
+  const { data, isLoading, isError, error } = query.getIssuesDetailFromQuestionBoard(
+    id,
+    Boolean(!selectedBoard)
+  );
 
   useEffect(() => {
     if (data) {
@@ -32,6 +36,7 @@ const QuestionBoardEditTemplate = () => {
   if (isLoading) {
     return <LoadingDot />;
   }
+  if (isError) return <ErrorPage error={error} />;
   if (!selectedBoard) return;
   return (
     <div css={styled.wrapper}>

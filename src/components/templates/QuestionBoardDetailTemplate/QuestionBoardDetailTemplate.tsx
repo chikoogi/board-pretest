@@ -6,11 +6,12 @@ import BoardDetailContent from "@components/organisms/BoardDetailGrid/Content";
 import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
 import { useEffect } from "react";
 import { useBoard } from "@src/provider/BoardProvider.tsx";
+import ErrorPage from "@src/pages/ErrorPage/ErrorPage.tsx";
 
 const QuestionBoardDetailTemplate = () => {
   const { id } = useParams();
   const { query } = useBoardQuery();
-  const { data, isLoading } = query.getIssuesDetailFromQuestionBoard(id);
+  const { data, isLoading, isError, error } = query.getIssuesDetailFromQuestionBoard(id);
   const { selectedBoard, handleSelect } = useBoard();
 
   useEffect(() => {
@@ -31,6 +32,7 @@ const QuestionBoardDetailTemplate = () => {
   if (isLoading) {
     return <LoadingDot />;
   }
+  if (isError) return <ErrorPage error={error} />;
   if (!selectedBoard) return;
   return (
     <div css={styled.wrapper}>

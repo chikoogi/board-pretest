@@ -3,6 +3,7 @@ import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { DEFAULT_FILTERS, QUESTION_BOARD } from "@src/variables/common-variable.ts";
 import styled from "@components/templates/FreeBoardDetailTemplate/style.ts";
 import { useState } from "react";
+import ErrorPage from "@src/pages/ErrorPage/ErrorPage.tsx";
 
 const QuestionBoardListTemplate = () => {
   const { query } = useBoardQuery();
@@ -20,8 +21,9 @@ const QuestionBoardListTemplate = () => {
     }));
   };
 
-  const { data, isLoading } = query.getIssuesFromQuestionBoard(filters);
+  const { data, isLoading, isError, error } = query.getIssuesFromQuestionBoard(filters);
 
+  if (isError) return <ErrorPage error={error} />;
   return (
     <div css={styled.wrapper}>
       <BoardListContent

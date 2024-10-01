@@ -6,13 +6,17 @@ import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
+import ErrorPage from "@src/pages/ErrorPage/ErrorPage.tsx";
 
 const FreeBoardEditTemplate = () => {
   const { selectedBoard, handleSelect } = useBoard();
 
   const { id } = useParams();
   const { query } = useBoardQuery();
-  const { data, isLoading } = query.getIssuesDetailFromFreeBoard(id, Boolean(!selectedBoard));
+  const { data, isLoading, isError, error } = query.getIssuesDetailFromFreeBoard(
+    id,
+    Boolean(!selectedBoard)
+  );
 
   useEffect(() => {
     if (data) {
@@ -32,6 +36,8 @@ const FreeBoardEditTemplate = () => {
   if (isLoading) {
     return <LoadingDot />;
   }
+  if (isError) return <ErrorPage error={error} />;
+
   if (!selectedBoard) return;
   return (
     <div css={styled.wrapper}>

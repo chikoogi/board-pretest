@@ -4,6 +4,7 @@ import { DEFAULT_FILTERS, FREE_BOARD } from "@src/variables/common-variable.ts";
 import { useState } from "react";
 import styled from "@components/templates/FreeBoardDetailTemplate/style.ts";
 import { BoardFiltersProps } from "@src/interfaces/common-interface.ts";
+import ErrorPage from "@src/pages/ErrorPage/ErrorPage.tsx";
 
 const FreeBoardListTemplate = () => {
   const { query } = useBoardQuery();
@@ -22,7 +23,8 @@ const FreeBoardListTemplate = () => {
     }));
   };
 
-  const { data, isLoading } = query.getIssuesFromFreeBoard(filters);
+  const { data, isLoading, isError, error } = query.getIssuesFromFreeBoard(filters);
+  if (isError) return <ErrorPage error={error} />;
 
   return (
     <div css={styled.wrapper}>

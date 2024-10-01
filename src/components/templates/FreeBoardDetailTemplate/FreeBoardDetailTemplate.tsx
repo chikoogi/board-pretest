@@ -6,11 +6,12 @@ import { FREE_BOARD } from "@src/variables/common-variable.ts";
 import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
 import { useBoard } from "@src/provider/BoardProvider.tsx";
 import { useEffect } from "react";
+import ErrorPage from "@src/pages/ErrorPage/ErrorPage.tsx";
 
 const FreeBoardDetailTemplate = () => {
   const { id } = useParams();
   const { query } = useBoardQuery();
-  const { data, isLoading } = query.getIssuesDetailFromFreeBoard(id);
+  const { data, isLoading, isError, error } = query.getIssuesDetailFromFreeBoard(id);
   const { selectedBoard, handleSelect } = useBoard();
 
   useEffect(() => {
@@ -31,6 +32,7 @@ const FreeBoardDetailTemplate = () => {
   if (isLoading) {
     return <LoadingDot />;
   }
+  if (isError) return <ErrorPage error={error} />;
   if (!selectedBoard) return;
   return (
     <div css={styled.wrapper}>
