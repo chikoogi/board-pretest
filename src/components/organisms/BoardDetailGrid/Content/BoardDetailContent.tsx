@@ -67,7 +67,7 @@ const BoardDetailContent = ({
                     },
                   });
                 },
-                onCancel: () => closeModal(),
+                onCancel: closeModal,
               });
             }}
           >

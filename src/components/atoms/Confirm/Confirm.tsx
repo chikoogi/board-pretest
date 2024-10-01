@@ -27,6 +27,7 @@ const Confirm = ({
         <Button onClick={onCancel}>{cancelLabel}</Button>
         <Button
           onClick={() => {
+            onCancel();
             onConfirm();
           }}
         >
