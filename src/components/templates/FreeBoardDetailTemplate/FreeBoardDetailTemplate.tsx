@@ -4,20 +4,37 @@ import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { useParams } from "react-router-dom";
 import { FREE_BOARD } from "@src/variables/common-variable.ts";
 import LoadingDot from "@components/atoms/LoadingDot/LoadingDot.tsx";
+import { useBoard } from "@src/provider/BoardProvider.tsx";
+import { useEffect } from "react";
 
 const FreeBoardDetailTemplate = () => {
   const { id } = useParams();
-
   const { query } = useBoardQuery();
-
   const { data, isLoading } = query.getIssuesDetailFromFreeBoard(id);
+  const { selectedBoard, handleSelect } = useBoard();
+
+  useEffect(() => {
+    if (data) {
+      handleSelect({
+        id: data.id,
+        nodeId: data.node_id,
+        boardNum: data.number,
+        createdAt: data.created_at,
+        title: data.title,
+        description: data.body,
+        userImageUrl: data.user.avatar_url,
+        userName: data.user.login,
+      });
+    }
+  }, [data]);
 
   if (isLoading) {
     return <LoadingDot />;
   }
+  if (!selectedBoard) return;
   return (
     <div css={styled.wrapper}>
-      <BoardDetailContent data={data} boardType={FREE_BOARD} />
+      <BoardDetailContent item={selectedBoard} boardType={FREE_BOARD} />
     </div>
   );
 };

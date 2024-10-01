@@ -27,8 +27,6 @@ export const useModal = () => {
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [modalStack, setModalStack] = useState<ReactNode[]>([]);
-
-  const [modalContent, setModalContent] = useState<ReactNode | null>(null);
   const location = useLocation();
   const modalKey = Date.now();
   const showModal = (Component: ComponentType<any>, props?: any) => {

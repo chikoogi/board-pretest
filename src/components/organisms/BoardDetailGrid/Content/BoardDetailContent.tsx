@@ -6,12 +6,16 @@ import { useNavigate } from "react-router-dom";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { useModal } from "@src/provider/ModalProvider.tsx";
 import Confirm from "@components/atoms/Confirm";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { BoardItemProps, BoardType } from "@src/interfaces/common-interface.ts";
 
-const BoardDetailContent = ({ data, boardType }: { data: any; boardType: BoardType }) => {
-  const [item, setItem] = useState<BoardItemProps | undefined>(undefined);
-
+const BoardDetailContent = ({
+  item,
+  boardType,
+}: {
+  item: BoardItemProps;
+  boardType: BoardType;
+}) => {
   const navigate = useNavigate();
   const { showModal, closeModal } = useModal();
 
@@ -27,22 +31,11 @@ const BoardDetailContent = ({ data, boardType }: { data: any; boardType: BoardTy
   const deleteIssues = mutate.deleteIssues();
 
   useEffect(() => {
-    if (data) {
-      document.title = data.title;
-      setItem({
-        id: data.id,
-        nodeId: data.node_id,
-        boardNum: data.number,
-        createdAt: data.created_at,
-        title: data.title,
-        description: data.body,
-        userImageUrl: data.user.avatar_url,
-        userName: data.user.login,
-      });
+    if (item) {
+      document.title = item.title;
     }
-  }, [data]);
+  }, [item]);
 
-  if (!data) return;
   return (
     <div css={styled.wrapper}>
       <div css={styled.titleContainer}>
@@ -56,7 +49,6 @@ const BoardDetailContent = ({ data, boardType }: { data: any; boardType: BoardTy
             variant="outlined"
             color={"info"}
             onClick={() => {
-              if (!item) return;
               navigate(`../edit/${item.boardNum}`);
             }}
           >
@@ -69,8 +61,6 @@ const BoardDetailContent = ({ data, boardType }: { data: any; boardType: BoardTy
               showModal(Confirm, {
                 message: "삭제하시겠습니까?",
                 onConfirm: () => {
-                  if (!item) return;
-
                   deleteIssues.mutate(item.nodeId, {
                     onSuccess: () => {
                       navigate("../list");

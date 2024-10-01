@@ -3,7 +3,7 @@ import InputBoard from "@components/molecules/InputBoard";
 import { useNavigate } from "react-router-dom";
 import { useBoardQuery } from "@src/common/queries/queries.ts";
 import { FREE_BOARD, QUESTION_BOARD } from "@src/variables/common-variable.ts";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ReactRouterPrompt from "react-router-prompt";
 import Modal from "@components/atoms/Modal";
 import Confirm from "@components/atoms/Confirm";
@@ -11,15 +11,14 @@ import { useBeforeUnload } from "@src/hooks/useBeforeUnload.ts";
 import { BoardItemProps, BoardType, updateBoardItemDTO } from "@src/interfaces/common-interface.ts";
 
 const BoardEditContent = ({
-  data,
+  item,
   boardType,
   enableDirty = true,
 }: {
-  data: any;
+  item: BoardItemProps;
   boardType: BoardType;
   enableDirty?: boolean;
 }) => {
-  const [item, setItem] = useState<BoardItemProps | undefined>(undefined);
   const [isDirty, setIsDirty] = useState(false);
   const navigate = useNavigate();
 
@@ -28,22 +27,6 @@ const BoardEditContent = ({
   const updateFreeMutate = mutate.updateIssuesFromFreeBoard();
   const updateQuestionMutate = mutate.updateIssuesFromQuestionBoard();
 
-  useEffect(() => {
-    if (data) {
-      setItem({
-        id: data.id,
-        nodeId: data.node_id,
-        boardNum: data.number,
-        createdAt: data.created_at,
-        title: data.title,
-        description: data.body,
-        userImageUrl: data.user.avatar_url,
-        userName: data.user.login,
-      });
-    }
-  }, [data]);
-
-  if (!data) return;
   return (
     <>
       <ReactRouterPrompt when={isDirty && enableDirty}>
@@ -73,7 +56,6 @@ const BoardEditContent = ({
             item={item}
             handleDirty={(d) => setIsDirty(d)}
             handleApply={(dataSet: updateBoardItemDTO) => {
-              if (!item) return;
               if (boardType === FREE_BOARD) {
                 updateFreeMutate.mutate(
                   { id: item.boardNum, data: dataSet },

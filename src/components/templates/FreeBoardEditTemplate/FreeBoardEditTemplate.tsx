@@ -1,19 +1,17 @@
 import styled from "./style.ts";
 import { FREE_BOARD } from "@src/variables/common-variable.ts";
 import BoardEditContent from "@components/organisms/BoardEditGrid/Content";
-import { useParams } from "react-router-dom";
-import { useBoardQuery } from "@src/common/queries/queries.ts";
+import { useBoard } from "@src/provider/BoardProvider.tsx";
 
 const FreeBoardEditTemplate = () => {
-  const { id } = useParams();
+  const { selectedBoard } = useBoard();
 
-  const { query } = useBoardQuery();
-  const { data } = query.getIssuesDetailFromFreeBoard(id);
+  if (!selectedBoard) return;
 
   return (
     <div css={styled.wrapper}>
       <div css={styled.contentContainer}>
-        <BoardEditContent boardType={FREE_BOARD} data={data} enableDirty={true} />
+        <BoardEditContent boardType={FREE_BOARD} item={selectedBoard} enableDirty={true} />
       </div>
     </div>
   );

@@ -4,17 +4,16 @@ import { QUESTION_BOARD } from "@src/variables/common-variable.ts";
 import { useParams } from "react-router-dom";
 import styled from "@components/templates/FreeBoardDetailTemplate/style.ts";
 import BoardEditContent from "@components/organisms/BoardEditGrid/Content";
+import { useBoard } from "@src/provider/BoardProvider.tsx";
 
 const QuestionBoardEditTemplate = () => {
-  const { id } = useParams();
+  const { selectedBoard } = useBoard();
 
-  const { query } = useBoardQuery();
-  const { data } = query.getIssuesDetailFromQuestionBoard(id);
-
+  if (!selectedBoard) return;
   return (
     <div css={styled.wrapper}>
       <div css={styled.contentContainer}>
-        <BoardEditContent boardType={QUESTION_BOARD} data={data} enableDirty={true} />
+        <BoardEditContent boardType={QUESTION_BOARD} item={selectedBoard} enableDirty={true} />
       </div>
     </div>
   );
